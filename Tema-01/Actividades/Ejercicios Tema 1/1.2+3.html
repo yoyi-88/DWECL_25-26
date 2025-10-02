@@ -1,0 +1,29 @@
+<!--Este es el segundo ejercicio de JavaScript-->
+<html>
+
+<head>1.2</head>
+
+<body>
+    <script>
+        function alerta()//la función alerta se cargar primero
+        {
+            var mensaje;
+            var opcion = prompt("Número de hijos:", "0");
+
+            if (opcion == null || opcion == "") {
+                mensaje = "Has cancelado, o introducido el número vacío";
+
+            } else {
+                mensaje = "Tienes " + opcion + " hijos.";
+            }
+            alert(mensaje);
+        }
+    </script>
+</body>
+
+</html>
+
+<body onload="alerta()//llama a la función alerta al cargar la página">
+</body>
+
+</html>

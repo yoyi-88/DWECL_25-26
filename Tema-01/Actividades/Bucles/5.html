@@ -1,0 +1,21 @@
+<html>
+    <script>
+        var n1 = Number(prompt("Introduzca el primer número: "));
+        var n2 = Number(prompt("Introduzca el segundo número: "));
+        var n3 = Number(prompt("Introduzca el tercer número: "));
+
+        if (n1 > n2 && n1 > n3 && n2 > n3) {
+            alert("Números ordenados" + n3 + ", " + n2 + ", " + n1);
+        } else if (n1 > n2 && n1 > n3 && n2 < n3) {
+            alert("Números ordenados" + n2 + ", " + n3 + ", " + n1);
+        } else if (n2 > n1 && n2 > n3 && n1 > n3) {
+            alert("Números ordenados" + n3 + ", " + n1 + ", " + n2);
+        } else if (n2 > n1 && n2 > n3 && n1 < n3) {
+            alert("Números ordenados" + n1 + ", " + n3 + ", " + n2);
+        } else if (n3 > n1 && n3 > n2 && n1 > n2) {
+            alert("Números ordenados" + n2 + ", " + n1 + ", " + n3);
+        } else if (n3 > n1 && n3 > n2 && n1 < n2) {
+            alert("Números ordenados" + n1 + ", " + n2 + ", " + n3);
+        }
+    </script>
+</html>

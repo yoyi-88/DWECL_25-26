@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Factores primos</title>
+</head>
+<body>
+<script>
+  let n = parseInt(prompt("Introduce un número entero:"));
+  if(isNaN(n)){
+    document.write("No has introducido un número válido.");
+  } else if(n === 0){
+    document.write("0 no tiene descomposición en factores primos.");
+  } else if(n === 1){
+    document.write("1 no tiene factores primos.");
+  } else {
+    let factores = [];
+    if(n < 0){
+      factores.push(-1);
+      n = Math.abs(n);
+    }
+    let divisor = 2;
+    while(n > 1){
+      if(n % divisor === 0){
+        factores.push(divisor);
+        n = n / divisor;
+      } else {
+        divisor++;
+      }
+    }
+    document.write(factores.join(" * "));
+  }
+</script>
+</body>
+</html>

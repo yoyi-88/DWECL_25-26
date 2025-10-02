@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        var opciones;
+        var figura;
+        var eleccion = 0;
+        
+        
+        while (eleccion != 5) {
+
+            eleccion = Number(prompt("Elija una opción: \n" +
+                "1. Elija entre cubo, esfera y cilindro. \n" +
+                "2. Introduzca los valores de las variables\n" +
+                "3. Cálculo del volumen\n" +
+                "4. Cálculo del área\n" +
+                "5. Finalizar"));
+
+            if (eleccion > 0 && eleccion < 6) {
+                switch (eleccion) {
+                    case 1: 
+                        figura = prompt("seleccione una figura: cubo, esfera, cilindro");
+                        break;
+                        
+                    case 2:
+                        if (figura == "cubo"){
+                            ladoCubo = Number(prompt("Exprese la longitud de lado del cubo (cm): "))  
+                            break;
+
+                        } else if (figura == "esfera")  {
+                            radioEsfera = Number(prompt("Exprese la longitud del radio de la esfera (cm): "))  
+                            break;
+
+
+                        } else if (figura == "cilindro") {
+                            radioCilindro = Number(prompt("Exprese la longitud del radio del cilindro (cm): "))
+                            alturaCilindro = Number(prompt("Exprese la longitud de la altura del cilindro (cm): "))
+                            break;
+
+
+                        }else {
+                            alert("Introducir nombre de la figura tal y como aparece.");
+                            break;
+                        }
+
+                    case 3:
+                        if (figura == "cubo"){
+                            var volumenCubo = ladoCubo * ladoCubo * ladoCubo;
+                            alert("Calculo de volumen del cubo: \n " + volumenCubo + "cm^3");
+                            
+                            break;
+
+                        } else if (figura == "esfera")  {
+                            var volumenEsfera = (4/3) * 3.14 * (radioEsfera * radioEsfera * radioEsfera);
+                            alert("Calculo de volumen de la esfera: \n " + volumenEsfera + "cm^3");
+                            break;
+
+
+                        } else if (figura == "cilindro") {
+                            var volumenCilindro = 3.14 * radioCilindro * radioCilindro * alturaCilindro;
+                            alert("Calculo de volumen del cilindro: \n " + volumenCilindro + "cm^3");
+                            break;
+                        }
+
+                    case 4:
+                        if (figura == "cubo"){
+                            var areaCubo = 6 * (ladoCubo * ladoCubo);
+                            alert("Calculo de área del cubo: \n " + areaCubo + "cm^2");
+                            break;
+
+                        } else if (figura == "esfera")  {
+                            var areaEsfera = 4 * 3.14 * (radioEsfera * radioEsfera);
+                            alert("Calculo de área de la esfera: \n " + areaEsfera + "cm^2");
+                            break;
+
+
+                        } else if (figura == "cilindro") {
+                            var areaCilindro = (2 * 3.14 * radioCilindro * alturaCilindro) + (2 * 3.14 * radioCilindro * radioCilindro);
+                            alert("Calculo de área del cilindro: \n " + areaCilindro + "cm^2");
+                            break;
+                        }
+
+                    default:
+                        alert("Programa finalizado");
+                }
+
+            } else {
+                alert("Introduzca una selección válida");
+
+            }
+
+        }
+
+
+
+    </script>
+</head>
+
+</html>

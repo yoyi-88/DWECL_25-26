@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descomposición en Factores Primos</title>
+</head>
+<body>
+
+<script>
+    let continueProgram = true;
+
+    while(continueProgram) {
+        let input = prompt("Introduce un número para encontrar sus factores primos:");
+        
+        if (input === null || input.trim() === "") {
+            alert("Operación cancelada.");
+            continueProgram = false;
+        } else {
+            let number = parseInt(input);
+            
+            if (isNaN(number) || number <= 1) {
+                alert("Por favor, introduce un número entero positivo mayor que 1.");
+            } else {
+                let n = number;
+                let factors = [];
+                let i = 2;
+
+                while (n > 1) {
+                    if (n % i === 0) {
+                        factors.push(i);
+                        n /= i;
+                    } else {
+                        i++;
+                    }
+                }
+                
+                let resultString = "";
+                if (factors.length > 0) {
+                    resultString = factors.join(' * ');
+                    alert(`${number} = ${resultString}`);
+                } else {
+                    alert("El número no tiene factores primos (esto no debería ocurrir para un número mayor que 1).");
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

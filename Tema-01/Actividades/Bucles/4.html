@@ -1,0 +1,16 @@
+<html>
+    <script>
+        var sueldo = Number(prompt("Introduzca sueldo"));
+        var antiguedad = Number(prompt("Introduzca antiguedad"));
+
+        if (sueldo < 750 && antiguedad >= 10) {
+            sueldo = sueldo + (sueldo * 0.1);
+            alert("Sueldo + prima = " + sueldo);
+        } else if (sueldo >= 750 && antiguedad >= 10) {
+            sueldo = sueldo + (sueldo * 0.05);
+            alert("Sueldo + prima = " + sueldo);
+        } else if (antiguedad < 10) {
+            alert("Sueldo = " + sueldo + " (No existe prima por falta de antigüedad)");
+        }
+    </script>
+</html>

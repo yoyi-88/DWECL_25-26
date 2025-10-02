@@ -1,0 +1,18 @@
+<html>
+    <h1>Calculadora de operaciones de segundo grado</h1>
+    <script>
+        var a = Number(prompt("Introduzca la a:"))
+        var b = Number(prompt("Introduzca la b:"))
+        var c = Number(prompt("Introduzca la c:"))
+        var d = (b ** 2) - (4 * a * c)
+        var x1 = (-b + Math.sqrt((b ** 2) - 4 * a * c)) / (2 * a)
+        var x2 = (-b - Math.sqrt((b ** 2) - 4 * a * c)) / (2 * a)
+
+        if (d < 0) {
+            alert("No es calculable");
+        } else {
+            alert("x1 = " + x1);
+            alert("x2 = " + x2);
+        }
+    </script>
+</html>
