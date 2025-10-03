@@ -3,55 +3,53 @@
 
 <head>
     <script>
-        var figura;
-        var eleccion = 0;
-
-
+        
         menu();
 
         function menu() {
-            while (eleccion != 5) {
+            do {
 
-            eleccion = Number(prompt("Elija una opción: \n" +
-                "1. Elija entre cubo, esfera y cilindro. \n" +
-                "2. Introduzca los valores de las variables\n" +
-                "3. Cálculo del volumen\n" +
-                "4. Cálculo del área\n" +
-                "5. Finalizar"));
+                eleccion = Number(prompt("Elija una opción: \n" +
+                    "1. Elija entre cubo, esfera y cilindro. \n" +
+                    "2. Introduzca los valores de las variables\n" +
+                    "3. Cálculo del volumen\n" +
+                    "4. Cálculo del área\n" +
+                    "5. Finalizar"));
 
-            if (eleccion > 0 && eleccion < 6) {
-                switch (eleccion) {
-                    case 1:
-                        figura = pedirFigura();
-                        break;
+                if (eleccion > 0 && eleccion < 6) {
+                    switch (eleccion) {
+                        case 1:
+                            var figura = pedirFigura();
+                            break;
 
-                    case 2:
-                        medidas = pedirMedidas();
-                        break;
+                        case 2:
+                            var medidas = pedirMedidas(figura);
+                            break;
 
 
-                    case 3:
-                        volumen = calcularVolumen();
-                        alert("Calculo de volumen: \n " + volumen + "cm^3");
-                        break;
+                        case 3:
+                            var volumen = calcularVolumen(figura, medidas);
+                            alert("Calculo de volumen: \n " + volumen + "cm^3");
+                            break;
 
-                    case 4:
-                        area = calcularArea();
-                        alert("Cálculo del área: \n " + area + "cm^2");
-                        break;
+                        case 4:
+                            var area = calcularArea(figura, medidas);
+                            alert("Cálculo del área: \n " + area + "cm^2");
+                            break;
 
-                    default:
-                        alert("Programa finalizado");
+                        default:
+                            alert("Programa finalizado");
+                    }
+
+                } else {
+                    alert("Introduzca una selección válida");
+
                 }
+            }while (eleccion != 5);
 
-            } else {
-                alert("Introduzca una selección válida");
+        } 
 
-            }
-
-        }
-
-        }
+        
         function pedirFigura() {
             return prompt("seleccione una figura: cubo, esfera, cilindro");
         }
@@ -82,15 +80,15 @@
 
         function calcularVolumen() {
             if (figura == "cubo") {
-                var volumenCubo = ladoCubo * ladoCubo * ladoCubo;
+                let volumenCubo = ladoCubo * ladoCubo * ladoCubo;
                 return volumenCubo;
 
             } else if (figura == "esfera") {
-                var volumenEsfera = (4 / 3) * 3.14 * (radioEsfera * radioEsfera * radioEsfera);
+                let volumenEsfera = (4 / 3) * 3.14 * (radioEsfera * radioEsfera * radioEsfera);
                 return volumenEsfera;
 
             } else if (figura == "cilindro") {
-                var volumenCilindro = 3.14 * radioCilindro * radioCilindro * alturaCilindro;
+                let volumenCilindro = 3.14 * radioCilindro * radioCilindro * alturaCilindro;
                 return volumenCilindro;
             }
 
@@ -99,16 +97,16 @@
 
         function calcularArea() {
             if (figura == "cubo") {
-                var areaCubo = 6 * (ladoCubo * ladoCubo);
+                let areaCubo = 6 * (ladoCubo * ladoCubo);
                 return areaCubo;
 
             } else if (figura == "esfera") {
-                var areaEsfera = 4 * 3.14 * (radioEsfera * radioEsfera);
+                let areaEsfera = 4 * 3.14 * (radioEsfera * radioEsfera);
                 return areaEsfera;
 
 
             } else if (figura == "cilindro") {
-                var areaCilindro = (2 * 3.14 * radioCilindro * alturaCilindro) + (2 * 3.14 * radioCilindro * radioCilindro);
+                let areaCilindro = (2 * 3.14 * radioCilindro * alturaCilindro) + (2 * 3.14 * radioCilindro * radioCilindro);
                 return areaCilindro;
             }
         }
