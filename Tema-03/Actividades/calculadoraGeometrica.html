@@ -7,6 +7,10 @@
         menu();
 
         function menu() {
+            let figura = null;
+            let medidas = null;
+
+            let eleccion;
             do {
 
                 eleccion = Number(prompt("Elija una opción: \n" +
@@ -19,11 +23,15 @@
                 if (eleccion > 0 && eleccion < 6) {
                     switch (eleccion) {
                         case 1:
-                            var figura = pedirFigura();
+                            figura = pedirFigura();
                             break;
 
                         case 2:
-                            var medidas = pedirMedidas(figura);
+                            if (figura) {
+                                medidas = pedirMedidas(figura);
+                            } else {
+                                alert("Primero debe elegir una figura.");
+                            }
                             break;
 
 
@@ -54,64 +62,52 @@
             return prompt("seleccione una figura: cubo, esfera, cilindro");
         }
 
-        function pedirMedidas() {
+        function pedirMedidas(figura) {
             if (figura == "cubo") {
-                return ladoCubo = Number(prompt("Exprese la longitud de lado del cubo (cm): "))
-
+                let lado = Number(prompt("Longitud del lado del cubo (cm):"));
+                return { lado };
 
             } else if (figura == "esfera") {
-                return radioEsfera = Number(prompt("Exprese la longitud del radio de la esfera (cm): "))
-
-
+                let radio = Number(prompt("Radio de la esfera (cm):"));
+                return { radio };
 
             } else if (figura == "cilindro") {
-                radioCilindro = Number(prompt("Exprese la longitud del radio del cilindro (cm): "))
-                alturaCilindro = Number(prompt("Exprese la longitud de la altura del cilindro (cm): "))
-                return[radioCilindro, alturaCilindro];
-
-
-
-            } else {
-                return alert("Introducir nombre de la figura tal y como aparece.");
-
+                let radio = Number(prompt("Radio del cilindro (cm):"));
+                let altura = Number(prompt("Altura del cilindro (cm):"));
+                return { radio, altura };
+            }else {
+                alert("Elija una figura válida");
+                return null;
             }
-
         }
 
-        function calcularVolumen() {
+        function calcularVolumen(figura, medidas) {
             if (figura == "cubo") {
-                let volumenCubo = ladoCubo * ladoCubo * ladoCubo;
-                return volumenCubo;
+                return Math.pow(medidas.lado, 3);
 
             } else if (figura == "esfera") {
-                let volumenEsfera = (4 / 3) * 3.14 * (radioEsfera * radioEsfera * radioEsfera);
-                return volumenEsfera;
+                return (4 / 3) * Math.PI * Math.pow(medidas.radio, 3);
 
             } else if (figura == "cilindro") {
-                let volumenCilindro = 3.14 * radioCilindro * radioCilindro * alturaCilindro;
-                return volumenCilindro;
+                return Math.PI * Math.pow(medidas.radio, 2) * medidas.altura;
             }
 
             
         }
 
-        function calcularArea() {
+        function calcularArea(figura, medidas) {
             if (figura == "cubo") {
-                let areaCubo = 6 * (ladoCubo * ladoCubo);
-                return areaCubo;
+                return 6 * Math.pow(medidas.lado, 2);
 
             } else if (figura == "esfera") {
-                let areaEsfera = 4 * 3.14 * (radioEsfera * radioEsfera);
-                return areaEsfera;
-
+                return 4 * Math.PI * Math.pow(medidas.radio, 2);
 
             } else if (figura == "cilindro") {
-                let areaCilindro = (2 * 3.14 * radioCilindro * alturaCilindro) + (2 * 3.14 * radioCilindro * radioCilindro);
-                return areaCilindro;
-            }
+                return (2 * Math.PI * medidas.radio * medidas.altura) +
+                       (2 * Math.PI * Math.pow(medidas.radio, 2));
         }
 
-
+    }
 
     </script>
 </head>
