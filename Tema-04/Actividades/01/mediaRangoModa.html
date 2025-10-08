@@ -2,7 +2,8 @@
 <html>
     <head>
         <script>
-            pedirValores();
+            media(pedirValores());
+            
 
 
 
@@ -11,13 +12,34 @@
 
             function pedirValores() {
                 let numeros = [];
+                let entrada;
+                let i = 0;
+
+                while (true) {
+                    entrada = prompt("Elija números");
+
+                    if (entrada === "f"){
+                        break;
+                    }
+
+                    numeros[i] = entrada;
+                    i ++;
+                }    
+                return  numeros;
+            }
+
+            function media(numeros) {
+                let suma = 0;
+                let media;
+
+                for (var i = 0; i != numeros.length; i++) {
+                    suma =  suma + parseInt(numeros[i]);
+                }
                 
-                prompt("elija", )
+                media = (suma / numeros.length);
+                
+                alert("La media de los números introducidos es : " + media);
 
-
-
-
-                    
             }
 
         </script>
