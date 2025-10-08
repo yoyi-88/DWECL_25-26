@@ -1,0 +1,10 @@
+moda (casos)
+1. un unico valor con mayor frecuencia que los demas
+2. no existe ningun valor con mayor frecuencia que los demas (no tiene moda)
+3. existen dos valores con mayor frecuencia que los demas
+    3.1. si esos valores son adyacentes (uno consecutivo del otro), la moda = media de los dos
+    3.2. si esos valores no son adyacentes, la moda es v1, v2...(se muestran los dos)
+
+empieza programa
+sale alerta pidiendo numero
+hasta que no sea f no para
