@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script>
-            array = pedirValores();
+
+<head>
+    <script>
+        function main() {
+            let array = pedirValores();
             media(array);
             rango(array);
             moda(array);
-            
-
-
-
-
-
 
             function pedirValores() {
                 let numeros = [];
@@ -21,14 +17,14 @@
                 while (true) {
                     entrada = prompt("Elija números");
 
-                    if (entrada === "f"){
+                    if (entrada === "f") {
                         break;
                     }
 
                     numeros[i] = entrada;
-                    i ++;
-                }    
-                return  numeros;
+                    i++;
+                }
+                return numeros;
             }
 
             function media(numeros) {
@@ -36,13 +32,11 @@
                 let media;
 
                 for (var i = 0; i != numeros.length; i++) {
-                    suma =  suma + parseInt(numeros[i]);
+                    suma = suma + parseInt(numeros[i]);
                 }
-                
-                media = (suma / numeros.length);
-                
-                alert("La media de los números introducidos es : " + media);
 
+                media = (suma / numeros.length);
+                alert("La media de los números introducidos es : " + media);
             }
 
             function rango(numeros) {
@@ -50,7 +44,7 @@
                 let numeroMenor;
                 let rango;
 
-                for(var i = 0; i != numeros.length; i++) {
+                for (var i = 0; i != numeros.length; i++) {
                     if (numeroMayor < numeros[i]) {
                         numeroMayor = parseInt(numeros[i]);
                     }
@@ -58,7 +52,7 @@
 
                 numeroMenor = numeroMayor;
 
-                for(var i = 0; i != numeros.length; i++) {
+                for (var i = 0; i != numeros.length; i++) {
                     if (numeroMenor > numeros[i]) {
                         numeroMenor = parseInt(numeros[i]);
                     }
@@ -69,18 +63,42 @@
             }
 
             function moda(numeros) {
-                let moda1 = 0;
-                for(var i = 0; i != numeros.length; i++) {
-                    for(var j = 0; j != numeros.length; j++) {
-                        if(numeros[i] == numeros[j]){
-                            moda1 ++;
+                let conteo = [];
+
+                for (var i = 0; i != numeros.length; i++) {
+                    if (!conteo[numeros[i]]) {
+                        conteo[numeros[i]] = 0;
+                    }
+                    conteo[numeros[i]] += 1;
+                }
+
+                let maxFrecuencia = 0;
+                for (let num in conteo) {
+                    if (conteo[num] > maxFrecuencia) {
+                        maxFrecuencia = conteo[num];
+                    }
+                }
+
+                let modas = "";
+                let primera = true;
+
+                for (let num in conteo) {
+                    if (conteo[num] === maxFrecuencia) {
+                        if (primera) {
+                            modas = num;
+                            primera = false;
+                        } else {
+                            modas = modas + ", " + num;
                         }
                     }
                 }
-                alert(moda1);
+                alert("La moda es: " + modas);
 
             }
+        }
 
-        </script>
-    </head>
+        main();
+    </script>
+</head>
+
 </html>
