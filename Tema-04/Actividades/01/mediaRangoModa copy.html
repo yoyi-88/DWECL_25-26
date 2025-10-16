@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        function main() {
+            let array = pedirValores();
+            media(array);
+            rango(array);
+            moda(array);
+
+            function pedirValores() {
+                let numeros = [];
+                let entrada;
+                let i = 0;
+
+                while (true) {
+                    entrada = prompt("Elija números");
+
+                    if (entrada === "f") {
+                        break;
+                    }
+
+                    numeros[i] = entrada;
+                    i++;
+                }
+                return numeros;
+            }
+
+            function media(numeros) {
+                let suma = 0;
+                let media;
+
+                for (var i = 0; i != numeros.length; i++) {
+                    suma = suma + parseInt(numeros[i]);
+                }
+
+                media = (suma / numeros.length);
+                alert("La media de los números introducidos es : " + media);
+            }
+
+            function rango(numeros) {
+                let numeroMayor = 0;
+                let numeroMenor;
+                let rango;
+
+                for (var i = 0; i != numeros.length; i++) {
+                    if (numeroMayor < numeros[i]) {
+                        numeroMayor = parseInt(numeros[i]);
+                    }
+                }
+
+                numeroMenor = numeroMayor;
+
+                for (var i = 0; i != numeros.length; i++) {
+                    if (numeroMenor > numeros[i]) {
+                        numeroMenor = parseInt(numeros[i]);
+                    }
+                }
+
+                rango = numeroMayor - numeroMenor;
+                alert("El rango es: " + rango);
+            }
+
+            function moda(numeros) {
+                var max = 0;
+                var modas = "";
+                var contaModa = 0;
+                var existeDistinto = false;
+                var enMedio = false;
+                var b=[]; // Cuenta repeticiones de cada valor
+                var m=[]; // Guardda las modas para caso de adyacenciaa
+
+                for (let i = 0; i < numeros.length; i++) {
+                    if (b[numeros[i]] == undefined) {
+                        b[numeros[i]] = 1;
+                    }else {
+                        b[numeros[i]]++;
+                    }
+                    
+                }
+
+                for (let i = 0; i < numeros.length; i++) { // Calcula el máximo de repeticiones
+                    if (b[numeros[i]] >= max) {
+                        max = b[numeros[i]];
+                    }
+                    
+                }
+
+                for (let i = 0; i < numeros.length; i++) { // Comprueba si existe valor con menos frecuencia
+                    if (b[numeros[i]] < max) {
+                        existeDistinto = true;
+                    }
+                    
+                }
+
+                for (let i = 0; i < numeros.length; i++) { // Comprueba si existe valor con menos frecuencia
+                    if (b[numeros[i]] == max && existeDistinto == true) {
+                        modas += " , " + s[i];
+                        contaModa ++;
+                        m[contaModa]=[numeros[i]];
+                        b[numeros[i]] = 0;  //para que no sume de nuevo a la cadena modas
+                    }
+                    
+                }
+
+                if(contaModa == 2) {
+                    for (let i = 0; i < numeros.length; i++) { // Comprueba si existe valor con menos frecuencia
+                        if (numeros[i] > m[1] && numeros[1]) {
+                            existeDistinto = true;
+                        }
+                    
+                    }
+                }
+
+
+                    
+                       
+
+
+
+
+            }
+        }
+
+        main();
+    </script>
+</head>
+
+</html>
