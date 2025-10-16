@@ -1,115 +1,87 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <script>
-        
+        // Ejecuta el menú principal al cargar
         menu();
 
-        function menu() {
-            let figura = null;
-            let medidas = null;
-
+        function menu() { 
+            let figura = null;   // Figura seleccionada
+            let medidas = null;  // Medidas de la figura
             let eleccion;
-            do {
 
+            do {
+                // Mostrar opciones al usuario
                 eleccion = Number(prompt("Elija una opción: \n" +
-                    "1. Elija entre cubo, esfera y cilindro. \n" +
-                    "2. Introduzca los valores de las variables\n" +
-                    "3. Cálculo del volumen\n" +
-                    "4. Cálculo del área\n" +
+                    "1. Elegir figura\n" +
+                    "2. Ingresar medidas\n" +
+                    "3. Calcular volumen\n" +
+                    "4. Calcular área\n" +
                     "5. Finalizar"));
 
                 if (eleccion > 0 && eleccion < 6) {
                     switch (eleccion) {
                         case 1:
-                            figura = pedirFigura();
+                            figura = pedirFigura(); // Seleccionar figura
                             break;
-
                         case 2:
                             if (figura) {
-                                medidas = pedirMedidas(figura);
+                                medidas = pedirMedidas(figura); // Ingresar medidas
                             } else {
                                 alert("Primero debe elegir una figura.");
                             }
                             break;
-
-
                         case 3:
-                            var volumen = calcularVolumen(figura, medidas);
-                            alert("Calculo de volumen: \n " + volumen + "cm^3");
+                            alert("Volumen: " + calcularVolumen(figura, medidas) + " cm^3");
                             break;
-
                         case 4:
-                            var area = calcularArea(figura, medidas);
-                            alert("Cálculo del área: \n " + area + "cm^2");
+                            alert("Área: " + calcularArea(figura, medidas) + " cm^2");
                             break;
-
                         default:
                             alert("Programa finalizado");
                     }
-
                 } else {
-                    alert("Introduzca una selección válida");
-
+                    alert("Opción no válida");
                 }
-            }while (eleccion != 5);
-
+            } while (eleccion != 5); // Repetir hasta finalizar
         } 
 
-        
+        // Pedir tipo de figura
         function pedirFigura() {
-            return prompt("seleccione una figura: cubo, esfera, cilindro");
+            return prompt("Seleccione una figura: cubo, esfera, cilindro");
         }
 
+        // Pedir medidas según la figura
         function pedirMedidas(figura) {
             if (figura == "cubo") {
-                let lado = Number(prompt("Longitud del lado del cubo (cm):"));
-                return { lado };
-
+                return { lado: Number(prompt("Lado del cubo (cm):")) };
             } else if (figura == "esfera") {
-                let radio = Number(prompt("Radio de la esfera (cm):"));
-                return { radio };
-
+                return { radio: Number(prompt("Radio de la esfera (cm):")) };
             } else if (figura == "cilindro") {
-                let radio = Number(prompt("Radio del cilindro (cm):"));
-                let altura = Number(prompt("Altura del cilindro (cm):"));
-                return { radio, altura };
-            }else {
-                alert("Elija una figura válida");
+                return {
+                    radio: Number(prompt("Radio del cilindro (cm):")),
+                    altura: Number(prompt("Altura del cilindro (cm):"))
+                };
+            } else {
+                alert("Figura no válida");
                 return null;
             }
         }
 
+        // Calcular volumen según figura
         function calcularVolumen(figura, medidas) {
-            if (figura == "cubo") {
-                return Math.pow(medidas.lado, 3);
-
-            } else if (figura == "esfera") {
-                return (4 / 3) * Math.PI * Math.pow(medidas.radio, 3);
-
-            } else if (figura == "cilindro") {
-                return Math.PI * Math.pow(medidas.radio, 2) * medidas.altura;
-            }
-
-            
+            if (figura == "cubo") return Math.pow(medidas.lado, 3);
+            if (figura == "esfera") return (4/3) * Math.PI * Math.pow(medidas.radio, 3);
+            if (figura == "cilindro") return Math.PI * Math.pow(medidas.radio, 2) * medidas.altura;
         }
 
+        // Calcular área según figura
         function calcularArea(figura, medidas) {
-            if (figura == "cubo") {
-                return 6 * Math.pow(medidas.lado, 2);
-
-            } else if (figura == "esfera") {
-                return 4 * Math.PI * Math.pow(medidas.radio, 2);
-
-            } else if (figura == "cilindro") {
-                return (2 * Math.PI * medidas.radio * medidas.altura) +
-                       (2 * Math.PI * Math.pow(medidas.radio, 2));
+            if (figura == "cubo") return 6 * Math.pow(medidas.lado, 2);
+            if (figura == "esfera") return 4 * Math.PI * Math.pow(medidas.radio, 2);
+            if (figura == "cilindro") 
+                return 2 * Math.PI * medidas.radio * medidas.altura + 2 * Math.PI * Math.pow(medidas.radio, 2);
         }
-
-    }
-
     </script>
 </head>
-
 </html>

@@ -14,10 +14,10 @@
                 let entrada;
                 let i = 0;
 
-                while (true) {
+                while (true) { // Bucle infinito en el que introducimos todos los numeros que queramos
                     entrada = prompt("Elija números");
 
-                    if (entrada === "f") {
+                    if (entrada === "f") { // Si introducimo f sale
                         break;
                     }
 
@@ -31,11 +31,11 @@
                 let suma = 0;
                 let media;
 
-                for (var i = 0; i != numeros.length; i++) {
+                for (var i = 0; i != numeros.length; i++) { // Suma todos los números
                     suma = suma + parseInt(numeros[i]);
                 }
 
-                media = (suma / numeros.length);
+                media = (suma / numeros.length); // Divide la suma entre la cantidad de números del array
                 alert("La media de los números introducidos es : " + media);
             }
 
@@ -44,8 +44,8 @@
                 let numeroMenor;
                 let rango;
 
-                for (var i = 0; i != numeros.length; i++) {
-                    if (numeroMayor < numeros[i]) {
+                for (var i = 0; i != numeros.length; i++) { 
+                    if (numeroMayor < numeros[i]) { // Recorre los números del array y saca el mayor
                         numeroMayor = parseInt(numeros[i]);
                     }
                 }
@@ -53,7 +53,7 @@
                 numeroMenor = numeroMayor;
 
                 for (var i = 0; i != numeros.length; i++) {
-                    if (numeroMenor > numeros[i]) {
+                    if (numeroMenor > numeros[i]) { // Recorre los números del array y saca el menor
                         numeroMenor = parseInt(numeros[i]);
                     }
                 }
@@ -63,38 +63,70 @@
             }
 
             function moda(numeros) {
-                let conteo = [];
+                var max = 0;
+                var modas = "";
+                var contaModa = 0;
+                var existeDistinto = false;
+                var b = []; // Cuenta repeticiones de cada valor
+                var m = []; // Guarda las modas
 
-                for (var i = 0; i != numeros.length; i++) {
-                    if (!conteo[numeros[i]]) {
-                        conteo[numeros[i]] = 0;
+                // Contar repeticiones
+                for (let i = 0; i < numeros.length; i++) {
+                    if (b[numeros[i]] == undefined) {
+                        b[numeros[i]] = 1;
+                    } else {
+                        b[numeros[i]]++;
                     }
-                    conteo[numeros[i]] += 1;
                 }
 
-                let maxFrecuencia = 0;
-                for (let num in conteo) {
-                    if (conteo[num] > maxFrecuencia) {
-                        maxFrecuencia = conteo[num];
+                // Calcular máxima frecuencia
+                for (let i = 0; i < numeros.length; i++) {
+                    if (b[numeros[i]] > max) {
+                        max = b[numeros[i]];
                     }
                 }
 
-                let modas = "";
-                let primera = true;
+                // Comprobar si existe algún valor con menos frecuencia
+                for (let i = 0; i < numeros.length; i++) {
+                    if (b[numeros[i]] < max) {
+                        existeDistinto = true;
+                    }
+                }
 
-                for (let num in conteo) {
-                    if (conteo[num] === maxFrecuencia) {
-                        if (primera) {
-                            modas = num;
-                            primera = false;
-                        } else {
-                            modas = modas + ", " + num;
+                // Guardar modas evitando duplicados
+                for (let i = 0; i < numeros.length; i++) {
+                    if (b[numeros[i]] == max && existeDistinto == true) {
+                        // Evitar duplicados
+                        var yaEsta = false;
+                        for (let j = 0; j < contaModa; j++) {
+                            if (m[j] == numeros[i]) {
+                                yaEsta = true;
+                            }
+                        }
+                        if (!yaEsta) {
+                            m[contaModa] = numeros[i];
+                            modas += (modas === "" ? "" : " , ") + numeros[i];
+                            contaModa++;
                         }
                     }
                 }
-                alert("La moda es: " + modas);
 
+                // Caso especial si hay dos modas 
+                if (contaModa == 2) {
+                    for (let i = 0; i < numeros.length; i++) {
+                        if (numeros[i] > m[1] && numeros[i] != m[0]) {
+                            existeDistinto = true;
+                        }
+                    }
+                }
+
+                if (modas === "" || !existeDistinto) {
+                    alert("Todos los números aparecen la misma cantidad de veces. No hay moda.");
+                } else {
+                    alert("La(s) moda(s) es/son: " + modas);
+                }
             }
+
         }
 
         main();

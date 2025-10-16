@@ -3,7 +3,7 @@
         var sueldo = Number(prompt("Introduzca sueldo"));
         var antiguedad = Number(prompt("Introduzca antiguedad"));
 
-        if (sueldo < 750 && antiguedad >= 10) {
+        if (sueldo < 750 && antiguedad >= 10) { // Diferentes condiciones para calcular las primas
             sueldo = sueldo + (sueldo * 0.1);
             alert("Sueldo + prima = " + sueldo);
         } else if (sueldo >= 750 && antiguedad >= 10) {

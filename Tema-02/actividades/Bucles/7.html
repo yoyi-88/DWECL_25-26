@@ -1,0 +1,17 @@
+<html>
+    <h1>Cálculo de factorial</h1>
+    <script>
+        var n = Number(prompt("Seleccione un número: "));
+
+        // Inicializar el resultado en 1
+        var resultado = 1;
+
+        // Calcular factorial 
+        do {
+            resultado = resultado * n;
+            n--;                       
+        } while (n != 0); // Repite hasta que n sea 0
+
+        alert(resultado);
+    </script>
+</html>

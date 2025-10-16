@@ -63,62 +63,36 @@
             }
 
             function moda(numeros) {
-                var max = 0;
-                var modas = "";
-                var contaModa = 0;
-                var existeDistinto = false;
-                var enMedio = false;
-                var b=[]; // Cuenta repeticiones de cada valor
-                var m=[]; // Guardda las modas para caso de adyacenciaa
+                let conteo = [];
 
-                for (let i = 0; i < numeros.length; i++) {
-                    if (b[numeros[i]] == undefined) {
-                        b[numeros[i]] = 1;
-                    }else {
-                        b[numeros[i]]++;
+                for (var i = 0; i != numeros.length; i++) {
+                    if (!conteo[numeros[i]]) {
+                        conteo[numeros[i]] = 0;
                     }
-                    
+                    conteo[numeros[i]] += 1;
                 }
 
-                for (let i = 0; i < numeros.length; i++) { // Calcula el máximo de repeticiones
-                    if (b[numeros[i]] >= max) {
-                        max = b[numeros[i]];
+                let maxFrecuencia = 0;
+                for (let num in conteo) {
+                    if (conteo[num] > maxFrecuencia) {
+                        maxFrecuencia = conteo[num];
                     }
-                    
                 }
 
-                for (let i = 0; i < numeros.length; i++) { // Comprueba si existe valor con menos frecuencia
-                    if (b[numeros[i]] < max) {
-                        existeDistinto = true;
-                    }
-                    
-                }
+                let modas = "";
+                let primera = true;
 
-                for (let i = 0; i < numeros.length; i++) { // Comprueba si existe valor con menos frecuencia
-                    if (b[numeros[i]] == max && existeDistinto == true) {
-                        modas += " , " + s[i];
-                        contaModa ++;
-                        m[contaModa]=[numeros[i]];
-                        b[numeros[i]] = 0;  //para que no sume de nuevo a la cadena modas
-                    }
-                    
-                }
-
-                if(contaModa == 2) {
-                    for (let i = 0; i < numeros.length; i++) { // Comprueba si existe valor con menos frecuencia
-                        if (numeros[i] > m[1] && numeros[1]) {
-                            existeDistinto = true;
+                for (let num in conteo) {
+                    if (conteo[num] === maxFrecuencia) {
+                        if (primera) {
+                            modas = num;
+                            primera = false;
+                        } else {
+                            modas = modas + ", " + num;
                         }
-                    
                     }
                 }
-
-
-                    
-                       
-
-
-
+                alert("La moda es: " + modas);
 
             }
         }

@@ -1,0 +1,21 @@
+<html>
+    <script>
+        var n = Number(prompt("Introduce un número:"));
+        var original = n;     // Guardar el número original para mostrarlo al final
+        var factores = "";    // Cadena donde se irán guardando los factores primos
+        var divisor = 2;      // Comenzamos dividiendo por 2 (el primer número primo)
+
+        // Mientras n sea mayor que 1, seguimos buscando factores
+        while (n > 1) {
+            if (n % divisor == 0) {        // Si divisor divide a n exactamente
+                factores = factores + " " + divisor; // Guardamos el divisor
+                n = n / divisor;           // Dividimos n entre el divisor
+            } else {
+                divisor++;                  // Si no divide, probamos con el siguiente número
+            }
+        }
+
+        // Mostrar los factores primos encontrados
+        alert("Factores primos de " + original + ": " + factores);
+    </script>
+</html>
