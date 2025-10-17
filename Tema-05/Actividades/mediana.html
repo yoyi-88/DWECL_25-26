@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        function main() {
+            let array = pedirValores();
+            mediana(array);
+
+            function pedirValores() {
+                let numeros = [];
+                let entrada;
+                let i = 0;
+
+                while (true) { // Bucle infinito en el que introducimos todos los numeros que queramos
+                    entrada = prompt("Elija números");
+
+                    if (entrada === "f") { // Si introducimo f, sale
+                        break;
+                    }
+
+                    numeros[i] = entrada;
+                    i++;
+                }
+                return numeros;
+            }
+
+            function mediana(numeros) {
+                /*let numOrdenados = numeros.sort((a, b) => a-b);
+                alert(numOrdenados);*/
+                alert (numeros1.sort((a,b)=> a-b));
+                
+            }
+        }
+        main();
+    </script>
+</head>
