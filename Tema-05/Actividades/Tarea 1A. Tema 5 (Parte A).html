@@ -6,35 +6,42 @@
         function main() {
             let array = pedirValores();
             mostrarArray(array);
-            
-
-
-
 
 
             function pedirValores() {
                 let numeros = [];
                 let entrada;
-                let i = 0;
 
                 while (true) {
-                    entrada = prompt("Introduzca número")
 
-                    if (entrada == "f") {
-                        break;
+                    let fila = [];
+
+                    while (true) {
+                        entrada = prompt("Introduzca número \n Para nueva fila pulse n. \n Para salir pulse f");
+
+                        if (entrada == "n") {
+                            numeros.push(fila);
+                            break;
+                        } else if (entrada == "f") {
+                            return numeros;
+                        } else {
+                            fila.push(Number(entrada));
+                        }
+
                     }
-
-                    numeros[i] = Number(entrada);
-                    i++;
-
 
 
                 }
-                return numeros;
-
             }
             function mostrarArray(numeros) {
-                alert(numeros)
+                let mensaje = "";
+
+                for (let i = 0; i < numeros.length; i++) {
+                    for (let j = 0; j < numeros[i].length; j++) {
+                        mensaje += "Elemento [" + i + "][" + j + "] = " + numeros[i][j] + "\n";
+                    }
+                }
+                alert(mensaje);
             }
 
         }
