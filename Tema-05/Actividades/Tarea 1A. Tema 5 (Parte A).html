@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        function main() {
+            let array = pedirValores();
+            mostrarArray(array);
+            
+
+
+
+
+
+            function pedirValores() {
+                let numeros = [];
+                let entrada;
+                let i = 0;
+
+                while (true) {
+                    entrada = prompt("Introduzca número")
+
+                    if (entrada == "f") {
+                        break;
+                    }
+
+                    numeros[i] = Number(entrada);
+                    i++;
+
+
+
+                }
+                return numeros;
+
+            }
+            function mostrarArray(numeros) {
+                alert(numeros)
+            }
+
+        }
+        main();
+    </script>
+</head>

@@ -19,17 +19,24 @@
                         break;
                     }
 
-                    numeros[i] = entrada;
+                    numeros[i] = Number(entrada); // Cambiamos el tipo a number para evitar problemas con la mediana
                     i++;
                 }
+
+                numeros.sort((a, b) => a - b); // Ordenamos el array de menor a mayor
                 return numeros;
             }
 
             function mediana(numeros) {
-                /*let numOrdenados = numeros.sort((a, b) => a-b);
-                alert(numOrdenados);*/
-                alert (numeros1.sort((a,b)=> a-b));
                 
+                if ((numeros.length % 2) == 0) { // Condición si el array es par
+                    let mediana1 = numeros.length - (numeros.length / 2) -1; // Cálculo para el primer número de la mediana
+                    alert("Mediana = " + numeros[mediana1] + ", " + numeros[mediana1 + 1]); // Para el segundo le sumamos 1 a resta
+                } else {
+                    let mediana1 = (numeros.length - 1) / 2; // Cálculo para un array impar
+                    alert("Mediana = " + numeros[mediana1]); 
+
+                }
             }
         }
         main();
