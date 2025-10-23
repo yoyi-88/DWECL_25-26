@@ -3,7 +3,11 @@
 <script>
     function menu() {
         let array = introducirTemperaturas();
-        calcularMedias(array);
+        let media = calcularMedias(array);
+        let maximo = maximoPorSeccion(array);
+        let sobrecalentamiento = detectarSobrecalentamientos(array);
+        mostrarResultados(media, maximo, sobrecalentamiento);
+
 
     }
 
@@ -38,26 +42,114 @@
         let numFin = 0;
 
         for (let i = 0; i != 2; i++) {
-            array[i];
-            media[i];
+            media[i] = [];
             for (let j = 0; j != 3; j++) {
-                array[i][j];
+                media[i][j] = [];
                 for (let k = 0; k != 5; k++) {
 
                     numFin += Number(array[i][j][k]);
 
                 }
-                media[j] = numFin / 5;
-                numfin = 0;
+                media[i][j] = numFin / 5;
+                numFin = 0;
 
             }
 
         }
-        console.log(media);
+        return media;
+    }
 
+    function maximoPorSeccion(array) {
+        let maximo = []
+        let numMax = 0;
+
+        for (let i = 0; i != 2; i++) {
+            maximo[i] = [];
+            for (let j = 0; j != 3; j++) {
+                for (let k = 0; k != 5; k++) {
+
+                    if (numMax < array[i][j][k]) {
+                        numMax = array[i][j][k];
+                    }
+
+
+                }
+
+            }
+            maximo[i] = numMax;
+            numMax = 0;
+
+        }
+        return maximo;
+
+    }
+
+    function detectarSobrecalentamientos(array) {
+        let tempMax = 100;
+        let sobrecalentamiento = [];
+
+        for (let i = 0; i != 2; i++) {
+            sobrecalentamiento[i] = [];
+            for (let j = 0; j != 3; j++) {
+                sobrecalentamiento[i][j] = [];
+                for (let k = 0; k != 5; k++) {
+
+
+                    if (array[i][j][k] > 100) {
+                        sobrecalentamiento[i][j][k] = `Sobrecalentamiento detectado`;
+                    } else if (array[i][j][k] < 100) {
+                        sobrecalentamiento[i][j][k] = `OK`;
+                    }
+
+
+                }
+
+            }
+
+
+        }
+        return sobrecalentamiento;
+
+    }
+
+    function mostrarResultados(media, maximo, sobrecalentamiento) {
+        let mensaje = "Resultados ejercicio \n \n";
+
+        mensaje += "Temperatura media por máquina: \n"
+        for (let i = 0; i != media.length; i++) {
+            for (let j = 0; j != media[i].length; j++) {
+                mensaje += `Sección ${i}, máquina ${j}, media: ${media[i][j]} \n`;
+            }
+        }
+
+        mensaje += "\n";
+
+        mensaje += "Máximo por sección: \n";
+        for (let i = 0; i != maximo.length; i++) {
+            mensaje += `Sección ${i}: ${maximo[i]} \n`;
+        }
+
+        mensaje += "\n";
+
+        mensaje += "Indicador de sobrecalentamiento: \n"
+        for (let i = 0; i != sobrecalentamiento.length; i++) {
+            for (let j = 0; j != sobrecalentamiento[i].length; j++) {
+                for (let k = 0; k != sobrecalentamiento[i][j].length; k++) {
+                    mensaje += `Sección ${i}, máquina ${j}, sensor: ${k}: ${sobrecalentamiento[i][j][k]} \n`;
+
+                }
+
+            }
+
+
+        }
+        alert(mensaje);
 
 
     }
+
+
+
 
 
 

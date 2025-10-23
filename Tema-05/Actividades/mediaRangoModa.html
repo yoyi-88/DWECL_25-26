@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        function main() {
+            let array = pedirValores();
+            media(array);
+            rango(array);
+            moda(array);
+
+            function pedirValores() {
+                let numeros = [];
+                let entrada;
+                let i = 0;
+
+                while (true) { // Bucle infinito en el que introducimos todos los numeros que queramos
+                    entrada = prompt("Elija números");
+
+                    if (entrada === "f") { // Si introducimo f sale
+                        break;
+                    }
+
+                    numeros[i] = entrada;
+                    i++;
+                }
+                return numeros;
+            }
+
+            function media(numeros) {
+                let suma = 0;
+                let media;
+
+                for (var i = 0; i != numeros.length; i++) { // Suma todos los números
+                    suma = suma + parseInt(numeros[i]);
+                }
+
+                media = (suma / numeros.length); // Divide la suma entre la cantidad de números del array
+                alert("La media de los números introducidos es : " + media);
+            }
+
+            function rango(numeros) {
+                let numeroMayor = 0;
+                let numeroMenor;
+                let rango;
+
+                for (var i = 0; i != numeros.length; i++) { 
+                    if (numeroMayor < numeros[i]) { // Recorre los números del array y saca el mayor
+                        numeroMayor = parseInt(numeros[i]);
+                    }
+                }
+
+                numeroMenor = numeroMayor;
+
+                for (var i = 0; i != numeros.length; i++) {
+                    if (numeroMenor > numeros[i]) { // Recorre los números del array y saca el menor
+                        numeroMenor = parseInt(numeros[i]);
+                    }
+                }
+
+                rango = numeroMayor - numeroMenor;
+                alert("El rango es: " + rango);
+            }
+
+            function moda(numeros) {
+                var max = 0;
+                var modas = "";
+                var contaModa = 0;
+                var existeDistinto = false;
+                var b = []; // Cuenta repeticiones de cada valor
+                var m = []; // Guarda las modas
+
+                // Contar repeticiones
+                for (let i = 0; i < numeros.length; i++) {
+                    if (b[numeros[i]] == undefined) {
+                        b[numeros[i]] = 1;
+                    } else {
+                        b[numeros[i]]++;
+                    }
+                }
+
+                // Calcular máxima frecuencia
+                for (let i = 0; i < numeros.length; i++) {
+                    if (b[numeros[i]] > max) {
+                        max = b[numeros[i]];
+                    }
+                }
+
+                // Comprobar si existe algún valor con menos frecuencia
+                for (let i = 0; i < numeros.length; i++) {
+                    if (b[numeros[i]] < max) {
+                        existeDistinto = true;
+                    }
+                }
+
+                // Guardar modas evitando duplicados
+                for (let i = 0; i < numeros.length; i++) {
+                    if (b[numeros[i]] == max && existeDistinto == true) {
+                        // Evitar duplicados
+                        var yaEsta = false;
+                        for (let j = 0; j < contaModa; j++) {
+                            if (m[j] == numeros[i]) {
+                                yaEsta = true;
+                            }
+                        }
+                        if (!yaEsta) {
+                            m[contaModa] = numeros[i];
+                            modas += (modas === "" ? "" : " , ") + numeros[i];
+                            contaModa++;
+                        }
+                    }
+                }
+
+                // Caso especial si hay dos modas 
+                if (contaModa == 2) {
+                    for (let i = 0; i < numeros.length; i++) {
+                        if (numeros[i] > m[1] && numeros[i] != m[0]) {
+                            existeDistinto = true;
+                        }
+                    }
+                }
+
+                if (modas === "" || !existeDistinto) {
+                    alert("Todos los números aparecen la misma cantidad de veces. No hay moda.");
+                } else {
+                    alert("La(s) moda(s) es/son: " + modas);
+                }
+            }
+
+        }
+
+        main();
+    </script>
+</head>
+
+</html>
