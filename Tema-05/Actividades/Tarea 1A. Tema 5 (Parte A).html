@@ -5,11 +5,12 @@
     <script>
         function main() {
             let array = pedirValores();
-            mostrarArray(array);
+            parImpar(array);
 
 
             function pedirValores() {
                 let numeros = [];
+                let parImpar = [];
                 let entrada;
 
                 while (true) {
@@ -17,7 +18,7 @@
                     let fila = [];
 
                     while (true) {
-                        entrada = prompt("Introduzca número \n Para nueva fila pulse n. \n Para salir pulse f");
+                        entrada = prompt("Introduzca número. \n Para nueva fila pulse n. \n Para salir pulse f.");
 
                         if (entrada == "n") {
                             numeros.push(fila);
@@ -25,7 +26,11 @@
                         } else if (entrada == "f") {
                             return numeros;
                         } else {
+
                             fila.push(Number(entrada));
+
+
+
                         }
 
                     }
@@ -33,17 +38,31 @@
 
                 }
             }
-            function mostrarArray(numeros) {
-                let mensaje = "";
+            function parImpar(numeros){
+                let pares = [];
+                let impares = [];
 
                 for (let i = 0; i < numeros.length; i++) {
                     for (let j = 0; j < numeros[i].length; j++) {
-                        mensaje += "Elemento [" + i + "][" + j + "] = " + numeros[i][j] + "\n";
+                        if(numeros[i][j] % 2 == 0) {
+                            pares.push(numeros[i][j]);
+                        } else {
+                            impares.push(numeros[i][j]);
+                        } 
                     }
                 }
-                alert(mensaje);
-            }
 
+                alert(
+                    "📘 Números pares:\n" + 
+                    (pares.length ? pares.join(", ") : "Ninguno") +
+                    "\n\n🔴 Números impares:\n" + 
+                    (impares.length ? impares.join(", ") : "Ninguno")
+                );
+                
+
+
+            }
+            
         }
         main();
     </script>

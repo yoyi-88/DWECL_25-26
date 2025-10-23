@@ -1,0 +1,10 @@
+introduce temp para sec0, maq0, sensor0
+sec0, maq.0 sens2
+
+temp media por maquina
+sec 0 maq 0
+sec 0 maq 1..
+
+temp max por secc
+
+alerta sobrecal

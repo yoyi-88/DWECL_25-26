@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<script>
+    function menu() {
+        let array = introducirTemperaturas();
+        calcularMedias(array);
+
+    }
+
+    function introducirTemperaturas() {
+        let array = []; // Creamos array inicial
+        // Definimos las diferentes líneas
+        let secciones = 2;
+        let maquinas = 3;
+        let sensores = 5;
+
+        /* 
+            Mediande for anidados, hacemos que se pidan los valores de temperatura de los sensores mientras se muestra 
+            la sección y los sensores en los que se encuentra el programa
+        */
+        for (let i = 0; i != secciones; i++) {
+            array[i] = [];
+            for (let j = 0; j != maquinas; j++) {
+                array[i][j] = [];
+                for (let k = 0; k != sensores; k++) {
+
+                    array[i][j][k] = Number(prompt("Introduzca temperatura \n" + `Sección: ${i} \n Máquina ${j} \n Sensor: ${k}`));
+
+                }
+            }
+        }
+        return array;
+
+    }
+
+    function calcularMedias(array) {
+        let media = [];
+        let numFin = 0;
+
+        for (let i = 0; i != 2; i++) {
+            array[i];
+            media[i];
+            for (let j = 0; j != 3; j++) {
+                array[i][j];
+                for (let k = 0; k != 5; k++) {
+
+                    numFin += Number(array[i][j][k]);
+
+                }
+                media[j] = numFin / 5;
+                numfin = 0;
+
+            }
+
+        }
+        console.log(media);
+
+
+
+    }
+
+
+
+
+    menu();
+</script>
+
+</html>
