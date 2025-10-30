@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<script>
+    function menu() {
+        // Función principal del programa.
+        // Sirve como punto de inicio y coordinación de todas las demás funciones.
+        // En orden:
+        // 1. Solicita las temperaturas de los sensores (introducirTemperaturas)
+        // 2. Calcula las medias por máquina (calcularMedias)
+        // 3. Encuentra la temperatura máxima por sección (maximoPorSeccion)
+        // 4. Detecta si hay sensores sobrecalentados (detectarSobrecalentamientos)
+        // 5. Muestra todos los resultados al usuario (mostrarResultados)
+        let array = introducirTemperaturas();
+        let media = calcularMedias(array);
+        let maximo = maximoPorSeccion(array);
+        let sobrecalentamiento = detectarSobrecalentamientos(array);
+        mostrarResultados(media, maximo, sobrecalentamiento);
+    }
+
+    function introducirTemperaturas() {
+        let array = []; // Creamos un arreglo vacío que contendrá todas las temperaturas.
+        
+        // Definimos el número de secciones, máquinas y sensores.
+        // En este caso hay 2 secciones, cada una con 3 máquinas, y cada máquina tiene 5 sensores.
+        let secciones = 2;
+        let maquinas = 3;
+        let sensores = 5;
+
+        /* 
+           Bucle triple (for anidado):
+           - El primer for (i) recorre las secciones.
+           - El segundo for (j) recorre las máquinas dentro de cada sección.
+           - El tercero (k) recorre los sensores dentro de cada máquina.
+           En cada iteración, se pide al usuario que introduzca la temperatura del sensor correspondiente.
+        */
+        for (let i = 0; i != secciones; i++) {
+            array[i] = []; // Inicializa el arreglo de máquinas para la sección i
+            for (let j = 0; j != maquinas; j++) {
+                array[i][j] = []; // Inicializa el arreglo de sensores para la máquina j
+                for (let k = 0; k != sensores; k++) {
+                    // Se solicita al usuario que introduzca la temperatura de un sensor específico
+                    array[i][j][k] = Number(prompt("Introduzca temperatura \n" + `Sección: ${i} \n Máquina ${j} \n Sensor: ${k}`));
+                }
+            }
+        }
+        return array; // Devuelve una estructura tridimensional con todas las temperaturas introducidas
+    }
+
+    function calcularMedias(array) {
+        let media = []; // Aquí guardaremos las medias de cada máquina
+        let numFin = 0; // Acumulador para sumar las temperaturas antes de sacar la media
+
+        // Recorre las secciones, máquinas y sensores del array
+        for (let i = 0; i != 2; i++) {
+            media[i] = [];
+            for (let j = 0; j != 3; j++) {
+                media[i][j] = [];
+                for (let k = 0; k != 5; k++) {
+                    // Suma las temperaturas de los 5 sensores de la máquina actual
+                    numFin += Number(array[i][j][k]);
+                }
+                // Calcula la media dividiendo entre 5 (número de sensores)
+                media[i][j] = numFin / 5;
+                // Reinicia el contador para la siguiente máquina
+                numFin = 0;
+            }
+        }
+        return media; // Devuelve las medias calculadas por máquina
+    }
+
+    function maximoPorSeccion(array) {
+        let maximo = []; // Arreglo donde se guardará el máximo de cada sección
+        let numMax = 0; // Variable temporal para comparar temperaturas
+
+        // Recorre todas las secciones
+        for (let i = 0; i != 2; i++) {
+            maximo[i] = [];
+            // Recorre todas las máquinas y sensores dentro de la sección
+            for (let j = 0; j != 3; j++) {
+                for (let k = 0; k != 5; k++) {
+                    // Si encuentra una temperatura mayor, la actualiza
+                    if (numMax < array[i][j][k]) {
+                        numMax = array[i][j][k];
+                    }
+                }
+            }
+            // Guarda el máximo encontrado para la sección actual
+            maximo[i] = numMax;
+            // Reinicia el valor para la siguiente sección
+            numMax = 0;
+        }
+        return maximo; // Devuelve los máximos por sección
+    }
+
+    function detectarSobrecalentamientos(array) {
+        let tempMax = 100; // Temperatura límite que define un sobrecalentamiento
+        let sobrecalentamiento = []; // Arreglo donde se guardarán los resultados (OK o alerta)
+
+        // Recorre todas las secciones, máquinas y sensores
+        for (let i = 0; i != 2; i++) {
+            sobrecalentamiento[i] = [];
+            for (let j = 0; j != 3; j++) {
+                sobrecalentamiento[i][j] = [];
+                for (let k = 0; k != 5; k++) {
+                    // Si la temperatura supera el límite, se marca un sobrecalentamiento
+                    if (array[i][j][k] > tempMax) {
+                        sobrecalentamiento[i][j][k] = `Sobrecalentamiento detectado`;
+                    } else {
+                        // Si está dentro del rango, se indica que está OK
+                        sobrecalentamiento[i][j][k] = `OK`;
+                    }
+                }
+            }
+        }
+        return sobrecalentamiento; // Devuelve el estado de cada sensor
+    }
+
+    function mostrarResultados(media, maximo, sobrecalentamiento) {
+        let mensaje = "Resultados ejercicio \n \n";
+
+        // Muestra las medias de temperatura calculadas por máquina
+        mensaje += "Temperatura media por máquina: \n";
+        for (let i = 0; i != media.length; i++) {
+            for (let j = 0; j != media[i].length; j++) {
+                mensaje += `Sección ${i}, máquina ${j}, media: ${media[i][j]} \n`;
+            }
+        }
+
+        mensaje += "\n";
+
+        // Muestra la temperatura máxima por sección
+        mensaje += "Máximo por sección: \n";
+        for (let i = 0; i != maximo.length; i++) {
+            mensaje += `Sección ${i}: ${maximo[i]} \n`;
+        }
+
+        mensaje += "\n";
+
+        // Muestra el estado de cada sensor (si está bien o sobrecalentado)
+        mensaje += "Indicador de sobrecalentamiento: \n";
+        for (let i = 0; i != sobrecalentamiento.length; i++) {
+            for (let j = 0; j != sobrecalentamiento[i].length; j++) {
+                for (let k = 0; k != sobrecalentamiento[i][j].length; k++) {
+                    mensaje += `Sección ${i}, máquina ${j}, sensor ${k}: ${sobrecalentamiento[i][j][k]} \n`;
+                }
+            }
+        }
+
+        // Finalmente, muestra toda la información recopilada en una ventana emergente
+        alert(mensaje);
+    }
+
+    // Llamada final que inicia el programa automáticamente al cargar la página
+    menu();
+</script>
+</html>

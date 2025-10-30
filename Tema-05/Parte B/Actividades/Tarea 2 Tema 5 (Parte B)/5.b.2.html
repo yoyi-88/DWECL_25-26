@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <script>
+        function verCesta() {
+
+
+        }
+
+        function añadirArticulo() {
+            let cod = Number(prompt("Inserte el código del producto"));
+            let nombre = prompt("Inserte el nombre del producto");
+            let precio = Number(prompt("Inserte el precio del producto"));;
+            let cantidad = Number(prompt("Inserte la cantidad del producto"));;
+
+            let nuevoArticulo = {
+                codigo: cod,
+                nombre: nombre,
+                precio: precio,
+                cantidad: cantidad
+            };
+
+            return nuevoArticulo;
+
+        }
+
+        function menu() {
+            let opcion;
+            let cesta = [];
+
+            do
+                opcion = Number(prompt("Seleccione una opción (número): \n 1. Ver cesta \n 2. Insertar un artículo \n 3. Borrar un artículo \n 4. Vaciar cesta \n 5. Salir"));
+                switch (opcion) {
+                    case 1: verCarrito();
+                    case 2:
+                        nuevoArticulo = añadirArticulo();
+                        if (nuevoArticulo !== null) {
+                            cesta.push(nuevoArticulo);
+                        }
+                        break;
+
+
+                }
+            while (opcion !== 5)
+        }
+        menu();
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora de Notas por Criterio</title>
+</head>
+<body>
+<h1>Calculadora de Notas por Criterio</h1>
+<button onclick="main()">Ingresar Notas y Calcular</button>
+<div id="resultado"></div>
+
+<script>
+// Función para ingresar notas
+function ingresarNotas() {
+    const criterios = []; // Matriz de notas por criterio
+    let criterioActual = [];
+    while (true) {
+        let entrada = prompt("Ingresa una nota numérica, 's' para cambiar de criterio, 'f' para finalizar:");
+        if (entrada === 'f') {
+            if (criterioActual.length > 0) criterios.push(criterioActual);
+            break;
+        } else if (entrada === 's') {
+            criterios.push(criterioActual);
+            criterioActual = [];
+        } else {
+            let nota = parseFloat(entrada);
+            if (!isNaN(nota)) {
+                criterioActual.push(nota);
+            } else {
+                alert("Entrada inválida. Ingresa un número, 's' o 'f'.");
+            }
+        }
+    }
+    return criterios;
+}
+
+// Función para calcular y mostrar medias
+function calcularMedias(criterios) {
+    const medias = criterios.map(notas => {
+        const suma = notas.reduce((acc, val) => acc + val, 0);
+        return suma / notas.length;
+    });
+
+    const notaFinal = medias.reduce((acc, val) => acc + val, 0) / medias.length;
+
+    // Redondear a un decimal
+    const mediasRedondeadas = medias.map(n => Math.round(n * 10) / 10);
+    const notaFinalRedondeada = Math.round(notaFinal * 10) / 10;
+
+    // Mostrar resultados en la web
+    const div = document.getElementById('resultado');
+    div.innerHTML = `<h2>Medias por criterio:</h2>`;
+    mediasRedondeadas.forEach((m, i) => {
+        div.innerHTML += `<p>Criterio ${i+1}: ${m}</p>`;
+    });
+    div.innerHTML += `<h2>Nota final: ${notaFinalRedondeada}</h2>`;
+
+    return mediasRedondeadas;
+}
+
+// Función para calcular notas máximas
+function calcularMaximos(criterios) {
+    return criterios.map(notas => Math.max(...notas));
+}
+
+// Función principal
+function main() {
+    const criterios = ingresarNotas();
+    calcularMedias(criterios);
+    const maximos = calcularMaximos(criterios);
+    console.log("Notas máximas por criterio:", maximos);
+}
+</script>
+</body>
+</html>

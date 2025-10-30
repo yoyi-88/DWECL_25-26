@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+function main() {
+    let criterios = [];           // Matriz de criterios
+    let criterioActual = [];      // Array temporal para el criterio actual
+    let contadorCriterio = 1;     
+
+    while (true) {
+        let entrada = prompt(`Criterio ${contadorCriterio}: ingresa nota, 's' para nuevo criterio, 'f' para finalizar`);
+        
+        if (entrada === 'f') {    // Finalizar
+            if (criterioActual.length > 0) criterios.push(criterioActual);
+            break;
+        } else if (entrada === 's') { // Nuevo criterio
+            if (criterioActual.length > 0) criterios.push(criterioActual);
+            criterioActual = [];
+            contadorCriterio++;
+        } else {                  // Nota numérica
+            let nota = Number(entrada);
+            if (!isNaN(nota)) {
+                criterioActual.push(nota);
+            } else {
+                alert("Entrada inválida. Ingresa un número, 's' o 'f'.");
+            }
+        }
+    }
+
+    console.log("Notas por criterio:", criterios);
+}
+
+main();
+</script>
+</body>
+</html>
