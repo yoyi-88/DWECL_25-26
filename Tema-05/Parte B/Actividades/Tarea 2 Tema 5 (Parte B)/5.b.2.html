@@ -3,7 +3,19 @@
 
 <body>
     <script>
-        function verCesta() {
+        function verCesta(cesta) {
+            this.cesta = cesta;
+            cestaFinal = [];
+
+            for(ver in cesta) {
+                mensaje += ver + ": "+ cesta[ver] + "\n";
+
+            }
+
+            alert(mensaje);
+
+            
+
 
 
         }
@@ -11,14 +23,15 @@
         function añadirArticulo() {
             let cod = Number(prompt("Inserte el código del producto"));
             let nombre = prompt("Inserte el nombre del producto");
-            let precio = Number(prompt("Inserte el precio del producto"));;
-            let cantidad = Number(prompt("Inserte la cantidad del producto"));;
+            let precio = Number(prompt("Inserte el precio del producto"));
+            let cantidad = Number(prompt("Inserte la cantidad del producto"));
 
             let nuevoArticulo = {
                 codigo: cod,
                 nombre: nombre,
                 precio: precio,
-                cantidad: cantidad
+                cantidad: cantidad,
+                mostrar: function () {alert("Código: "+this.codigo + "\nNombre: "+this.nombre + "\nPrecio: "+this.precio + "\nCantidad: "+this.cantidad); }
             };
 
             return nuevoArticulo;
@@ -29,20 +42,24 @@
             let opcion;
             let cesta = [];
 
-            do
+
+            while (opcion != 5) {
                 opcion = Number(prompt("Seleccione una opción (número): \n 1. Ver cesta \n 2. Insertar un artículo \n 3. Borrar un artículo \n 4. Vaciar cesta \n 5. Salir"));
                 switch (opcion) {
-                    case 1: verCarrito();
+                    case 1: 
+                    verCesta(cesta);
+                    break;
                     case 2:
                         nuevoArticulo = añadirArticulo();
                         if (nuevoArticulo !== null) {
                             cesta.push(nuevoArticulo);
                         }
                         break;
-
-
                 }
-            while (opcion !== 5)
+
+            }
+
+
         }
         menu();
 
