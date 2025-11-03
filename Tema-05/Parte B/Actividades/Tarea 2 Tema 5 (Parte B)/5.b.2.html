@@ -3,6 +3,7 @@
 
 <body>
     <script>
+
         function verCesta(cesta) {
             this.cesta = cesta;
             cestaFinal = [];
@@ -17,6 +18,27 @@
             
 
 
+        }
+        function verCesta() {
+            if (cesta.length === 0) {
+                return 'La cesta está vacía';
+            }
+
+            let mensaje = "Cesta \n";
+            mensaje += "cod | nombre | Precio | Cantidad | Subtotal \n";
+
+            let totalCesta = 0;
+
+            // Recorremos cada producto del array
+            for (let producto of cesta) {
+                let subtotal = producto.precio * producto.cantidad;
+                totalCesta += subtotal; // Sumamos el subtotal al total
+
+                // .toFixed(2) es para mostrar 2 decimales
+                mensaje += `${producto.cod}\t| ${producto.nombre}\t| ${producto.precio.toFixed(2)}€\t| ${producto.cantidad}\t| ${subtotal.toFixed(2)}€\n`;
+            }
+            mensaje += `TOTAL: ${totalCesta.toFixed(2)}€`;
+            return mensaje;
 
         }
 
@@ -25,6 +47,10 @@
             let nombre = prompt("Inserte el nombre del producto");
             let precio = Number(prompt("Inserte el precio del producto"));
             let cantidad = Number(prompt("Inserte la cantidad del producto"));
+
+            if (cod < 0 || nombre == null || precio < 0 || cantidad < 1) {
+                return 'Se ha declarado algún dato inválido';
+            }
 
             let nuevoArticulo = {
                 codigo: cod,
@@ -38,9 +64,11 @@
 
         }
 
-        function menu() {
-            let opcion;
-            let cesta = [];
+        function borrarArticulo() {
+            if (cesta.length === 0) {
+                alert("La cesta ya está vacía.");
+                return;
+            }
 
 
             while (opcion != 5) {
@@ -61,7 +89,59 @@
 
 
         }
-        menu();
+
+        function vaciarCesta() {
+            if (cesta.length === 0) {
+                alert("La cesta ya está vacía.");
+                return;
+            }
+
+
+
+            cesta = []; // Vaciamos la cesta (asignamos un array nuevo y vacío)
+            alert("La cesta se ha vaciado");
+
+
+        }
+
+
+
+        let opcion;
+        let cesta = [];
+        let salir = false;
+
+        while (!salir) {
+            opcion = Number(prompt("Seleccione una opción (número): \n 1. Ver cesta \n 2. Insertar un artículo \n 3. Borrar un artículo \n 4. Vaciar cesta \n 5. Salir"));
+
+            switch (opcion) {
+                case 1:
+                    imprimirCesta = verCesta();
+                    alert(imprimirCesta);
+                    break;
+                case 2:
+                    nuevoArticulo = añadirArticulo();
+                    cesta.push(nuevoArticulo);
+                    break;
+                case 3:
+                    borrarArticulo();
+                    break;
+
+                case 4:
+                    vaciarCesta();
+                    break;
+
+                case 5:
+                    salir = true;
+
+
+
+
+            }
+
+        }
+
+
+
 
 
     </script>
