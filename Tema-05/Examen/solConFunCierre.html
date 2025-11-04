@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Control de Temperaturas con Cierre e Historial</title>
+</head>
+<body>
+  <script>
+    // --- Función cierre para crear un historial de registros ---
+    const crearHistorial=(function () {
+      const historial = []; 
+      const fun=function(sg,datos) {
+          if (sg==0) historial.push(datos);
+          if (sg==1) return historial;
+        }
+      return fun   
+    })()
+
+    // --- Función para introducir temperaturas ---
+    function introducirTemperaturas(secciones, maquinas, sensores) {
+      const temperaturas = [];
+     // Usando bucles de asignación --------------------------------------------------------
+      // for (let s = 0; s < secciones; s++) {
+      //   temperaturas[s] = [];
+      //   for (let m = 0; m < maquinas; m++) {
+      //     temperaturas[s][m] = [];
+      //     for (let t = 0; t < sensores; t++) {
+      //       const valor = Number(prompt(
+      //         `Introduce la temperatura (°C) para:\nSección ${s}, Máquina ${m}, Sensor ${t}:`
+      //       ));
+      //       temperaturas[s][m][t] = valor;
+      //     }
+      //   }
+      // }
+      // Usando el método push() --------------------------------------------------------------------
+      for (let s = 0; s < secciones; s++) {
+        temperaturas.push([]);
+        for (let m = 0; m < maquinas; m++) {
+          temperaturas[s].push([]);
+          for (let t = 0; t < sensores; t++) {
+            const valor = Number(prompt(
+              `Introduce la temperatura (°C) para:\nSección ${s}, Máquina ${m}, Sensor ${t}:`
+            ));
+            temperaturas[s][m].push(valor);
+          }
+        }
+      }
+      //---------------------------------------------------------------------------------------
+
+      return temperaturas;
+    }
+
+    // --- Función para calcular medias ---
+    function calcularMedias(temperaturas) {
+      let mensaje = "=== TEMPERATURA MEDIA POR MÁQUINA ===\n";
+      for (let s = 0; s < temperaturas.length; s++) {
+        for (let m = 0; m < temperaturas[s].length; m++) {
+          const suma = temperaturas[s][m].reduce((a, b) => a + b, 0);
+          const media = (suma / temperaturas[s][m].length).toFixed(1);
+          mensaje += `Sección ${s} - Máquina ${m}: ${media} °C\n`;
+        }
+      }
+      alert(mensaje);
+    }
+
+    // --- Función para calcular máximo por sección ---
+    function maximoPorSeccion(temperaturas) {
+      let mensaje = "=== TEMPERATURA MÁXIMA POR SECCIÓN ===\n";
+      for (let s = 0; s < temperaturas.length; s++) {
+        let maxTemp = -Infinity;
+        for (let m = 0; m < temperaturas[s].length; m++) { 
+          maxTemp=Math.max(...temperaturas[s][m]);
+        }
+        mensaje += `Sección ${s}: ${maxTemp} °C\n`;
+      }
+      alert(mensaje);
+    }
+
+    // --- Función para detectar sobrecalentamientos ---
+    function detectarSobrecalentamientos(temperaturas) {
+      let alertas = "";
+      for (let s = 0; s < temperaturas.length; s++) {
+        for (let m = 0; m < temperaturas[s].length; m++) {
+          for (let t = 0; t < temperaturas[s][m].length; t++) {
+            if (temperaturas[s][m][t] > 100) {
+              alertas += `Sobrecalentamiento en Sección ${s}, Máquina ${m}, Sensor ${t}: ${temperaturas[s][m][t]}°C\n`;
+            }
+          }
+        }
+      }
+      if (alertas === "") {
+        alert("No se han detectado sobrecalentamientos.");
+      } else {
+        alert("=== ALERTAS DE SOBRECALENTAMIENTO ===\n" + alertas);
+      }
+    }
+
+    // --- Función principal ---
+    function ejecutarControlTemperaturas() {
+
+      let nuevoCiclo = true;
+
+      while (nuevoCiclo) {
+        const secciones = parseInt(prompt("Introduce el número de secciones:"));
+        const maquinas = parseInt(prompt("Introduce el número de máquinas por sección:"));
+        const sensores = parseInt(prompt("Introduce el número de sensores por máquina:"));
+
+        if (isNaN(secciones) || isNaN(maquinas) || isNaN(sensores)) {
+          alert("Valores no válidos. Inténtalo de nuevo.");
+        }
+
+        var datos = introducirTemperaturas(secciones, maquinas, sensores);
+
+        // Calcular resultados
+        calcularMedias(datos);
+        maximoPorSeccion(datos);
+        detectarSobrecalentamientos(datos);
+        crearHistorial(0,datos);
+        // Preguntar si desea otro ciclo, si no, finaliza.
+        const respuesta = prompt("¿Deseas introducir otro conjunto de datos? (s/n)");
+        if (!respuesta || respuesta.toLowerCase() !== "s") {
+          nuevoCiclo = false;
+        }
+      }
+      
+      // Mostrar ciclos almacenados
+
+      alert(`Se han registrado ${crearHistorial(1,datos).length} ciclos de temperaturas,
+y se ha enviado los arrays de ciclos almacenado a consola.
+<<<<< Programa finalizado >>>>>`);
+
+      // Obtiene el conjunto de arrays de ciclos, y los imprime en consola
+       console.log (crearHistorial(1,datos));
+    }
+
+    ejecutarControlTemperaturas();
+  </script>
+</body>
+</html>

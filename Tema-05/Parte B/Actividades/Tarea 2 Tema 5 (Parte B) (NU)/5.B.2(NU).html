@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <script>
+
+        
+        function verCesta(cesta) {
+            if (cesta.length === 0) {
+                return 'La cesta está vacía';
+            }
+
+            let mensaje = "Cesta \n";
+            mensaje += "cod | nombre | Precio | Cantidad | Subtotal \n";
+
+            let totalCesta = 0;
+
+            // Recorremos cada producto del array
+            for (let producto of cesta) {
+                let subtotal = producto.precio * producto.cantidad;
+                totalCesta += subtotal; // Sumamos el subtotal al total
+
+                // .toFixed(2) es para mostrar 2 decimales
+                mensaje += `${producto.codigo}\t| ${producto.nombre}\t| ${producto.precio.toFixed(2)}€\t| ${producto.cantidad}\t| ${subtotal.toFixed(2)}€\n`;
+            }
+            mensaje += `TOTAL: ${totalCesta.toFixed(2)}€`;
+            return mensaje;
+
+        }
+
+        function añadirArticulo() {
+            let codigo = Number(prompt("Inserte el código del producto"));
+            let nombre = prompt("Inserte el nombre del producto");
+            let precio = Number(prompt("Inserte el precio del producto"));
+            let cantidad = Number(prompt("Inserte la cantidad del producto"));
+
+            if (codigo < 0 || nombre == null || precio < 0 || cantidad < 1) {
+                alert('Se ha declarado algún dato inválido')
+                return null;
+            }
+
+            let nuevoArticulo = {
+                codigo: codigo,
+                nombre: nombre,
+                precio: precio,
+                cantidad: cantidad,
+                mostrar: function () { alert("Código: " + this.codigo + "\nNombre: " + this.nombre + "\nPrecio: " + this.precio + "\nCantidad: " + this.cantidad); }
+            };
+
+            return nuevoArticulo;
+
+        }
+
+        function borrarArticulo(cesta) {
+            if (cesta.length === 0) {
+                alert("La cesta ya está vacía.");
+                return;
+            }
+
+
+
+            let codABorrar = Number(prompt("Inserte el CÓDIGO del artículo que desea borrar:"));
+
+            // Buscar el índice del producto en la cesta
+            let indice = cesta.findIndex(producto => producto.codigo === codABorrar);
+
+            // 4. Procesar el resultado
+            if (indice !== -1) {
+                // .splice elimina 1 elemento en la posición indice
+                cesta.splice(indice, 1);
+                alert(`Artículo con código ${codABorrar} borrado exitosamente.`);
+                return cesta;
+            } else {
+                alert(`Error: No se encontró ningún artículo con el código ${codABorrar}.`);
+                return cesta;
+            }
+
+        }
+
+        function vaciarCesta(cesta) {
+            if (cesta.length === 0) {
+                alert("La cesta ya está vacía.");
+                return cesta;
+            }
+
+
+
+            
+            alert("La cesta se ha vaciado");
+            return [];      
+
+
+        }
+
+
+        function menu() {
+            let opcion;
+            let cesta = [];
+            let salir = false;
+
+            while (!salir) {
+                opcion = Number(prompt("Seleccione una opción (número): \n 1. Ver cesta \n 2. Insertar un artículo \n 3. Borrar un artículo \n 4. Vaciar cesta \n 5. Salir"));
+
+                switch (opcion) {
+                    case 1:
+                        alert(verCesta(cesta))
+                        break;
+                    case 2:
+                        let nuevoArticulo = añadirArticulo();
+                        if (nuevoArticulo) {
+                            cesta.push(nuevoArticulo);
+                        }
+                        break;
+                        
+                    case 3:
+                        cesta = borrarArticulo(cesta);
+                        break;
+
+                    case 4:
+                        cesta = vaciarCesta(cesta);
+                        break;
+
+                    case 5:
+                        salir = true;
+                        break;
+
+
+
+                }
+
+            }
+
+
+        }
+        menu();
+
+
+
+
+
+    </script>
+</body>
+
+</html>
