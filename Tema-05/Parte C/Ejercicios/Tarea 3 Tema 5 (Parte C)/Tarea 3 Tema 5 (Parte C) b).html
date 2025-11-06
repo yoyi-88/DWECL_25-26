@@ -1,0 +1,83 @@
+<html>
+
+<body>
+    <script>
+        class Articulo {
+            #art = {};
+            constructor(codigo, nombre, precio, cantidad) {
+                this.#art.codigo = codigo;
+                this.#art.nombre = nombre;
+                this.#art.precio = precio;
+                this.#art.cantidad = cantidad;
+                return this.#art;
+            }
+
+
+        }
+
+        class Cesta {
+            cesta = [];
+
+            constructor() {
+                this.añadirArticulo();
+                this.verCesta();
+            }
+
+            añadirArticulo() {
+                let codigo = 0;
+                let nombre = prompt("Inserte el nombre del producto");
+                let precio = Number(prompt("Inserte el precio del producto"));
+                let cantidad = Number(prompt("Inserte la cantidad del producto"));
+
+                if (codigo < 0 || nombre == null || precio < 0 || cantidad < 1) {
+                    alert('Se ha declarado algún dato inválido')
+                    return null;
+                }
+
+                let art = new Articulo(codigo, nombre, precio, cantidad);
+
+                this.cesta.push(art);
+
+                codigo++;
+
+                console.log(this.cesta);
+
+
+
+
+            }
+
+            verCesta() {
+                if (this.cesta.length === 0) {
+                    alert("La cesta está vacía");
+                    return null;
+                }
+
+                let mensaje = "Cesta \n";
+                mensaje += "cod | nombre | Precio | Cantidad | Subtotal \n";
+
+                let totalCesta = 0;
+
+                // Recorremos cada producto del array
+                for (let producto of this.cesta) {
+                    let subtotal = producto.precio * producto.cantidad;
+                    totalCesta += subtotal; // Sumamos el subtotal al total
+
+                    // .toFixed(2) es para mostrar 2 decimales
+                    mensaje += `${producto.codigo}\t| ${producto.nombre}\t| ${producto.precio.toFixed(2)}€\t| ${producto.cantidad}\t| ${subtotal.toFixed(2)}€\n`;
+                }
+                mensaje += `TOTAL: ${totalCesta.toFixed(2)}€`;
+                return alert(mensaje);
+
+            }
+
+
+        }
+        var cesta = new Cesta();
+
+
+
+    </script>
+</body>
+
+</html>

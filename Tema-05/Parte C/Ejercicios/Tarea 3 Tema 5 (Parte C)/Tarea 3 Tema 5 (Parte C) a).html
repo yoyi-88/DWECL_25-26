@@ -1,0 +1,37 @@
+<html>
+    <body>
+        <script>
+            class Empleado {
+                nombre;
+                apellido;
+                #edad;
+
+                constructor (nombre, apellido, edad) {
+                    this.nombre = nombre;
+                    this.apellido = apellido;
+                    this.#edad = edad;
+                }
+
+                muestra() {
+                    return "Nombre: " + this.nombre + " / Apellido: " + this.apellido + " / Edad: " + this.#edad;
+                }
+            }
+
+            class Profesor extends Empleado{
+                cargo;
+
+                constructor(nombre, apellido, edad, cargo) {
+                    super(nombre, apellido, edad);
+                    this.cargo = cargo;
+                }
+
+                muestraCargo() {
+                    return this.cargo;
+                }
+            }
+
+            Profesor1 = new Profesor("Yoël", "Gómez Benítez", 20, "Profesor de música");
+            alert("Datos del profesor: " + Profesor1.muestra() + " / Cargo: " + Profesor1.muestraCargo());
+        </script>
+    </body>
+</html>
