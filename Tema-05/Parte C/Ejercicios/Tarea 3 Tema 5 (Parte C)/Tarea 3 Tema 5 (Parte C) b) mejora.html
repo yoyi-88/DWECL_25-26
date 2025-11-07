@@ -19,10 +19,6 @@
             cesta = [];
             codigoSiguiente = 1;
 
-            constructor() {
-                this.menu();
-            }
-
             añadirArticulo() {
                 let codigo = 0;
                 let nombre = prompt("Inserte el nombre del producto");
@@ -76,7 +72,7 @@
 
                 let codABorrar = Number(prompt("Inserte el código del artículo que desea borrar:"));
 
-                // Buscar el índice del producto en la cesta
+                // Buscar el índice del producto en la cesta y si no lo encuentra devuelve 1
                 let indice = this.cesta.findIndex(producto => producto.codigo === codABorrar);
 
                 // 4. Procesar el resultado
@@ -100,10 +96,18 @@
                 }
 
                 alert("La cesta se ha vaciado");
+                // Igualamos el array a un array vacío;
                 return this.cesta = [];
             }
 
-            menu() {
+            
+
+
+        }
+
+        class Menu extends Cesta {
+            
+            iniciarMenu() {
                 let opcion;
                 let salir = false;
 
@@ -130,10 +134,10 @@
                     }
                 }
             }
-
-
         }
-        var cesta = new Cesta();
+
+        var menu = new Menu();
+        menu.iniciarMenu();
 
 
 
