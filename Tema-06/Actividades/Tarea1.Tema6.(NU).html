@@ -1,25 +1,36 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    
-  </head>
-  <body>
+
+<head>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+    <style type="text/css">
+        input:invalid {
+            border: 1px solid red;
+        }
+
+        input:valid {
+            border: 1px solid green;
+        }
+    </style>
+</head>
+
+<body>
     <div class="container my-5">
         <h3>Datos del vehículo:</h3>
         <div class="d-flex gap-3">
             <div class="mb-3">
                 <label for="formGroupExampleInput" class="form-label">Matrícula</label>
-                <input type="text" class="form-control" id="formGroupExampleInput">
+                <input type="text" class="form-control" id="matricula" pattern="^[0-9]{4}[A-Z]{3}$" required>
             </div>
             <div class="mb-3">
                 <label for="formGroupExampleInput2" class="form-label">Fecha matriculación</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="dd/mm/aaaa">
+                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="dd/mm/aaaa"  required>
             </div>
             <div class="mb-3">
                 <label for="formGroupExampleInput2" class="form-label">5 últimos dígitos (nº bastidor)</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" required>
             </div>
         </div>
 
@@ -27,30 +38,30 @@
         <div class="d-flex gap-3">
             <div class="mb-3">
                 <label for="formGroupExampleInput" class="form-label">Nombre:</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Placeholder 1">
+                <input type="text" class="form-control" id="formGroupExampleInput" required>
             </div>
             <div class="mb-3">
                 <label for="formGroupExampleInput2" class="form-label">Apellidos:</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Placeholder 2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" required>
             </div>
             <div class="mb-3">
                 <label for="formGroupExampleInput2" class="form-label">Domicilio:</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Placeholder 2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" required>
             </div>
         </div>
 
         <div class="d-flex gap-3">
             <div class="mb-3">
                 <label for="formGroupExampleInput" class="form-label">DNI:</label>
-                <input type="text" class="form-control" id="formGroupExampleInput">
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="11111111A" required>
             </div>
             <div class="mb-3">
                 <label for="formGroupExampleInput2" class="form-label">Correo electrónico:</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="email" class="form-control" id="formGroupExampleInput2" required>
             </div>
             <div class="mb-3">
                 <label for="formGroupExampleInput2" class="form-label">Teléfono:</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2">
+                <input type="text" class="form-control" id="formGroupExampleInput2" required>
             </div>
             <div class="mb-3">
                 <label class="form-label d-block">Tipo de baja:</label>
@@ -60,14 +71,18 @@
                 </div>
                 <br>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tipo_baja" id="baja_definitiva" value="definitiva">
+                    <input class="form-check-input" type="radio" name="tipo_baja" id="baja_definitiva"
+                        value="definitiva">
                     <label class="form-check-label" for="baja_definitiva">Definitiva</label>
                 </div>
             </div>
-            </div>
         </div>
     </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-  </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="Validator.js"></script>
+</body>
+
 </html>
