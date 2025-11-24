@@ -21,7 +21,7 @@
                 this.id = id;
                 this.imagen = imagen;                
                 this.nombre = nombre;                
-                this.precio = precio;                
+                this.precio = precio;             
             }
         }
 
@@ -34,6 +34,35 @@
             }
 
             mostrarProductos() {
+                const contenedor = document.getElementById("cards-container");
+
+                this.#productos.forEach(datos => {
+                    var nuevaTarjeta = this.crearProducto(datos);
+                    contenedor.appendChild(nuevaTarjeta);
+                });
+            
+            }
+
+            crearProducto(productos) {
+                var card = document.createElement("card");
+                card.classList.add('card');
+
+                var cardImagen = document.createElement("img");
+                cardImagen.src = productos.imagen;
+
+                var cardNombre = document.createElement("h4");
+                cardNombre.textContent = productos.nombre;
+
+                var cardPrecio = document.createElement("p");
+                cardPrecio.textContent = productos.precio;
+
+                card.appendChild(cardImagen);
+                card.appendChild(cardNombre);
+                card.appendChild(cardPrecio);
+
+                return card;
+
+
                 
             }
 
@@ -43,12 +72,12 @@
         }
 
         var productos = [
-            {id: 1, imagen: "monsuno.jpg", nombre: "Monsuno", precio: 10},
-            {id: 2, imagen: "bayblade.jpg", nombre:"Bayblade", precio: 15},
-            {id: 3, imagen: "zomblings.jpg", nombre: "Zombligs", precio: 5},
-            {id: 4, imagen: "bakugans.jpg", nombre: "Bakugans", precio: 12},
-            {id: 5, imagen: "estampitas.jpg", nombre: "Estampitas", precio: 3},
-            {id: 6, imagen: "cromos.jpg", nombre: "Cromos", precio: 4}
+            {id: 1, imagen: "img/monsuno.jpg", nombre: "Monsuno", precio: 10},
+            {id: 2, imagen: "img/bayblade.jpg", nombre:"Bayblade", precio: 15},
+            {id: 3, imagen: "img/zomblings.jpg", nombre: "Zombligs", precio: 5},
+            {id: 4, imagen: "img/bakugans.jpg", nombre: "Bakugans", precio: 12},
+            {id: 5, imagen: "img/estampitas.jpg", nombre: "Estampitas", precio: 3},
+            {id: 6, imagen: "img/cromos.jpg", nombre: "Cromos", precio: 4}
         ]; 
 
         window.onload=()=>new ContProductos(productos);
@@ -72,7 +101,7 @@
         <div class="row">
             <div class="col">
                 <div class="container text-center">
-                    <div class="row row-cols-3">
+                    <div id="cards-container" class="row row-cols-3">
                         
                     </div>
                 </div>
