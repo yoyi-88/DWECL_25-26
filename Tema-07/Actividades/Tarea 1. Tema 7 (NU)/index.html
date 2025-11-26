@@ -12,6 +12,7 @@
         .derecha {
             text-align: right;
         }
+
     </style>
 
     <script>
@@ -46,6 +47,7 @@
             crearProducto(productos) {
                 var card = document.createElement("card");
                 card.classList.add('card');
+                
 
                 var cardImagen = document.createElement("img");
                 cardImagen.src = productos.imagen;
@@ -53,12 +55,19 @@
                 var cardNombre = document.createElement("h4");
                 cardNombre.textContent = productos.nombre;
 
+                var cardImput = document.createElement("input");
+
                 var cardPrecio = document.createElement("p");
                 cardPrecio.textContent = productos.precio;
 
+                var cardBoton = document.createElement("button");
+                cardBoton.setAttribute = "btn btn-group";
+
                 card.appendChild(cardImagen);
                 card.appendChild(cardNombre);
+                card.appendChild(cardImput);
                 card.appendChild(cardPrecio);
+                card.appendChild(cardBoton);
 
                 return card;
 
@@ -72,12 +81,12 @@
         }
 
         var productos = [
-            {id: 1, imagen: "img/monsuno.jpg", nombre: "Monsuno", precio: 10},
-            {id: 2, imagen: "img/bayblade.jpg", nombre:"Bayblade", precio: 15},
-            {id: 3, imagen: "img/zomblings.jpg", nombre: "Zombligs", precio: 5},
-            {id: 4, imagen: "img/bakugans.jpg", nombre: "Bakugans", precio: 12},
-            {id: 5, imagen: "img/estampitas.jpg", nombre: "Estampitas", precio: 3},
-            {id: 6, imagen: "img/cromos.jpg", nombre: "Cromos", precio: 4}
+            {id: 1, imagen: "img/monsuno.jpg", nombre: "Monsuno", precio: 10 + " €"},
+            {id: 2, imagen: "img/bayblade.jpg", nombre:"Bayblade", precio: 15 + " €"},
+            {id: 3, imagen: "img/zomblings.jpg", nombre: "Zombligs", precio: 5 + " €"},
+            {id: 4, imagen: "img/bakugans.jpg", nombre: "Bakugans", precio: 12 + " €"},
+            {id: 5, imagen: "img/estampitas.jpg", nombre: "Estampitas", precio: 3 + " €"},
+            {id: 6, imagen: "img/cromos.jpg", nombre: "Cromos", precio: 35 + " €"}
         ]; 
 
         window.onload=()=>new ContProductos(productos);
@@ -98,7 +107,7 @@
                 </header>
             </div>
         </div>
-        <div class="row">
+        <div class="row row-cols-2">
             <div class="col">
                 <div class="container text-center">
                     <div id="cards-container" class="row row-cols-3">
