@@ -76,16 +76,18 @@
                 cardBoton.dataset.id = productos.id;
                 
                 // Añadimos el event listener
-                cardBoton.addEventListener('click', (evento) => {
+                cardBoton.addEventListener('click', () => {
                     const productoId = productos.id;
 
-                    const cantidad = cardImput;
+                    const cantidad = parseInt(cardImput.value);
 
                     if (cantidad <= 0) {
                         alert("Introduzca un número de productos válido");
                         return;
+                    } else if (cantidad > 0) {
+                        miCesta.añadirProducto(productoId, cantidad);
                     }
-                })
+                }); 
 
 
 
@@ -108,14 +110,31 @@
 
             constructor(cesta) {
                 this.#cesta = [];
-
+                
             }
 
             añadirProducto(productoId, cantidad) {
-                if (productoId == 0) {
-                    
+                const elementoExiste = this.#cesta.find(producto => producto.id === productoId);
+
+                if(!elementoExiste) {
+                    this.#cesta.push({id: productoId, cantidad: cantidad });
+                } else {
+                   elementoExiste.cantidad += cantidad;
                 }
+                console.table(this.#cesta);
                 
+                
+
+            }
+
+            filaCesta() {
+                
+
+                var id = document.createElement('td')
+                id.innerHTML('')
+            }
+
+            render() {
 
             }
 
@@ -130,7 +149,10 @@
             {id: 6, imagen: "img/cromos.jpg", nombre: "Cromos", precio: 35}
         ]; 
 
-        window.onload=()=>new ContProductos(productos);
+
+        var miCesta = new Cesta();
+
+        window.onload=()=>new ContProductos(productos, miCesta);
 
         
     </script>
