@@ -129,9 +129,22 @@
 
             filaCesta() {
                 
+                var fila = document.createElement('tr')
 
-                var id = document.createElement('td')
-                id.innerHTML('')
+                var id = document.createElement('td');
+                id.appendChild(fila);
+
+                var nombre = document.createElement('td');
+                nombre.appendChild(fila);
+
+                var cantidad = document.createElement('td');
+                cantidad.appendChild(fila);
+
+                var precio = document.createElement('td');
+                precio.appendChild(fila);
+
+                var subtotal = document.createElement('td');
+                subtotal.appendChild(fila);
             }
 
             render() {
