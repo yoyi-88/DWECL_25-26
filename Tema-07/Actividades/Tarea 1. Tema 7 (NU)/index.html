@@ -106,10 +106,12 @@
 
         }
         class Cesta {
-            #cesta;
+            #cesta = [];
+            #productos;
 
             constructor(cesta) {
-                this.#cesta = [];
+                this.#cesta = cesta;
+                this.#productos = productos;
                 
             }
 
@@ -121,34 +123,58 @@
                 } else {
                    elementoExiste.cantidad += cantidad;
                 }
-                console.table(this.#cesta);
                 
                 
 
             }
 
-            filaCesta() {
+            crearFila(productos, cesta) {
                 
                 var fila = document.createElement('tr')
+                fila.classList.add('tr');
 
-                var id = document.createElement('td');
-                id.appendChild(fila);
+                var filaId = document.createElement('td');
+                filaId.innerHTML = cesta.id;
+                
+                var filaNombre = document.createElement('td');
+                filaNombre.innerHTML = productos.nombre;
+                
+                var filaCantidad = document.createElement('td');
+                filaCantidad.innerHTML = cesta.cantidad;
+                filaCantidad.type = 'number';
 
-                var nombre = document.createElement('td');
-                nombre.appendChild(fila);
+                var filaPrecio = document.createElement('td');
+                filaPrecio.type = 'number';
+                filaPrecio.innerHTML = productos.precio;
+                
+                var filaSubtotal = document.createElement('td');
+                filaSubtotal.innerHTML = (productos.precio * cesta.cantidad);
 
-                var cantidad = document.createElement('td');
-                cantidad.appendChild(fila);
+                var filaBorrar = document.createElement('button');
+                filaBorrar.innerText = "Borrar";
+                filaBorrar.classList.add("btn");
+                filaBorrar.classList.add("btn-danger");
 
-                var precio = document.createElement('td');
-                precio.appendChild(fila);
 
-                var subtotal = document.createElement('td');
-                subtotal.appendChild(fila);
+                filaBorrar.addEventListener('click', () => {fila.remove(fila)}); 
+
+
+
+                filaId.appendChild(fila);
+                filaNombre.appendChild(fila);
+                filaCantidad.appendChild(fila);
+                filaPrecio.appendChild(fila);
+                filaSubtotal.appendChild(fila);
             }
 
-            render() {
+            mostrarCesta() {
+                let contenedorCesta = document.getElementById("cestaProductos");
+                contenedorCesta.innerHTML = '';
 
+                for (let item of this.#cesta) {
+
+                }
+                
             }
 
         }
@@ -204,7 +230,7 @@
                             <th scope="col">Subtotal</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="cestaProductos">
                     </tbody>
                             
                 </table>
