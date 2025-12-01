@@ -13,6 +13,10 @@
             text-align: right;
         }
 
+        span {
+            font-size: 60px;
+            vertical-align: middle;
+        }
     </style>
 
     <script>
@@ -20,9 +24,9 @@
 
             constructor(id, imagen, nombre, precio) {
                 this.id = id;
-                this.imagen = imagen;                
-                this.nombre = nombre;                
-                this.precio = precio;             
+                this.imagen = imagen;
+                this.nombre = nombre;
+                this.precio = precio;
             }
         }
 
@@ -31,7 +35,7 @@
             constructor(productos) {
                 this.#productos = productos;
                 this.mostrarProductos();
-                
+
             }
 
             mostrarProductos() {
@@ -44,14 +48,14 @@
                     // Añadimos el nuevo producto al contenedor
                     contenedor.appendChild(nuevaTarjeta);
                 });
-            
+
             }
 
             crearProducto(productos) {
                 // Creamos la plantilla para los productos
                 var card = document.createElement("card");
                 card.classList.add('card');
-                
+
 
                 var cardImagen = document.createElement("img");
                 cardImagen.src = productos.imagen;
@@ -74,20 +78,20 @@
                 // Proceso para asociar el botón a la cesta
                 // Asignamos automáticamente un id por orden a cada botón
                 cardBoton.dataset.id = productos.id;
-                
+
                 // Añadimos el event listener
                 cardBoton.addEventListener('click', () => {
                     const productoId = productos.id;
 
                     const cantidad = parseInt(cardImput.value);
 
-                    if (cantidad <= 0) {
+                    if (cantidad <= 0 || isNaN(cantidad)) {
                         alert("Introduzca un número de productos válido");
                         return;
                     } else if (cantidad > 0) {
                         miCesta.añadirProducto(productoId, cantidad);
                     }
-                }); 
+                });
 
 
 
@@ -101,7 +105,7 @@
                 return card;
 
 
-                
+
             }
 
         }
@@ -109,91 +113,130 @@
             #cesta = [];
             #productos;
 
-            constructor(cesta) {
-                this.#cesta = cesta;
+            constructor(productos) {
                 this.#productos = productos;
-                
+
             }
 
             añadirProducto(productoId, cantidad) {
                 const elementoExiste = this.#cesta.find(producto => producto.id === productoId);
 
-                if(!elementoExiste) {
-                    this.#cesta.push({id: productoId, cantidad: cantidad });
+                if (!elementoExiste) {
+                    this.#cesta.push({ id: productoId, cantidad: cantidad });
                 } else {
-                   elementoExiste.cantidad += cantidad;
+                    elementoExiste.cantidad += cantidad;
                 }
-                
-                
+
+                this.mostrarCesta();
 
             }
 
-            crearFila(productos, cesta) {
-                
+            crearFila(producto, itemCesta) {
+
                 var fila = document.createElement('tr')
                 fila.classList.add('tr');
 
                 var filaId = document.createElement('td');
-                filaId.innerHTML = cesta.id;
-                
+                filaId.innerHTML = itemCesta.id;
+
                 var filaNombre = document.createElement('td');
-                filaNombre.innerHTML = productos.nombre;
-                
+                filaNombre.innerHTML = producto.nombre;
+
                 var filaCantidad = document.createElement('td');
-                filaCantidad.innerHTML = cesta.cantidad;
-                filaCantidad.type = 'number';
+                filaCantidad.innerHTML = itemCesta.cantidad;
 
                 var filaPrecio = document.createElement('td');
-                filaPrecio.type = 'number';
-                filaPrecio.innerHTML = productos.precio;
-                
+                filaPrecio.innerHTML = producto.precio.toFixed(2) + "€";
+
+                var subtotal = producto.precio * itemCesta.cantidad;
                 var filaSubtotal = document.createElement('td');
-                filaSubtotal.innerHTML = (productos.precio * cesta.cantidad);
+                filaSubtotal.innerHTML = subtotal.toFixed(2) + " €";
 
-                var filaBorrar = document.createElement('button');
-                filaBorrar.innerText = "Borrar";
-                filaBorrar.classList.add("btn");
-                filaBorrar.classList.add("btn-danger");
+                var filaBorrarCelda = document.createElement('td'); // Celda para el botón de borrar
+                var filaBorrarBoton = document.createElement('button');
+                filaBorrarBoton.innerText = "Borrar";
+                filaBorrarBoton.classList.add("btn", "btn-danger", "btn-sm");
+
+                filaBorrarBoton.addEventListener('click', () => {
+                    // Obtenemos el id del producto
+                    const idAEliminar = itemCesta.id;
+
+                    // llamamos al método de borrado
+                    this.eliminarProducto(idAEliminar);
+                });
+
+                filaBorrarCelda.appendChild(filaBorrarBoton);
 
 
-                filaBorrar.addEventListener('click', () => {fila.remove(fila)}); 
 
+                fila.appendChild(filaId);
+                fila.appendChild(filaNombre);
+                fila.appendChild(filaCantidad);
+                fila.appendChild(filaPrecio);
+                fila.appendChild(filaSubtotal);
+                fila.appendChild(filaBorrarCelda);
 
+                return fila;
+            }
 
-                filaId.appendChild(fila);
-                filaNombre.appendChild(fila);
-                filaCantidad.appendChild(fila);
-                filaPrecio.appendChild(fila);
-                filaSubtotal.appendChild(fila);
+            actualizarTotales(total) {
+                const totalElement = document.getElementById('totalSinIva');
+                const totalIvaElement = document.getElementById('totalConIva');
+                const multiplicacionIva = 1.21;
+                const totalConIva = total * multiplicacionIva;
+
+                totalElement.innerHTML = `Total: ${total.toFixed(2)} €`;
+                totalIvaElement.innerHTML = `Total + IVA (21%): ${totalConIva.toFixed(2)} €`;
             }
 
             mostrarCesta() {
                 let contenedorCesta = document.getElementById("cestaProductos");
                 contenedorCesta.innerHTML = '';
 
+                let totalCesta = 0;
+
                 for (let item of this.#cesta) {
+                    const productoCompleto = this.#productos.find(prod => prod.id === item.id);
+
+                    if (productoCompleto) {
+                        // Creamos la fila
+                        const nuevaFila = this.crearFila(productoCompleto, item);
+                        contenedorCesta.appendChild(nuevaFila);
+
+                        // Sumamos al subtotal
+                        totalCesta += productoCompleto.precio * item.cantidad;
+                    }
 
                 }
-                
+                this.actualizarTotales(totalCesta);
+
+            }
+
+            eliminarProducto(productoId) {
+                // filter mantiene todos los productos cuyo id no coincida con el que queremos borrar
+                this.#cesta = this.#cesta.filter(item => item.id !== productoId);
+
+                // Actualizamos la vista 
+                this.mostrarCesta();
             }
 
         }
 
         var productos = [
-            {id: 1, imagen: "img/monsuno.jpg", nombre: "Monsuno", precio: 10},
-            {id: 2, imagen: "img/bayblade.jpg", nombre:"Bayblade", precio: 15},
-            {id: 3, imagen: "img/zomblings.jpg", nombre: "Zombligs", precio: 5},
-            {id: 4, imagen: "img/bakugans.jpg", nombre: "Bakugans", precio: 12},
-            {id: 5, imagen: "img/estampitas.jpg", nombre: "Estampitas", precio: 3},
-            {id: 6, imagen: "img/cromos.jpg", nombre: "Cromos", precio: 35}
-        ]; 
+            new Producto(1, "img/monsuno.jpg", "Monsuno", 10),
+            new Producto(2, "img/bayblade.jpg", "Bayblade", 15),
+            new Producto(3, "img/zomling.jpg", "Zombligs", 5),
+            new Producto(4, "img/bakugans.jpg", "Bakugans", 12),
+            new Producto(5, "img/estampitas.jpg", "Estampitas", 3),
+            new Producto(6, "img/cromos.jpg", "Cromos", 35)
+        ];
 
 
-        var miCesta = new Cesta();
+        var miCesta = new Cesta(productos);
 
-        window.onload=()=>new ContProductos(productos, miCesta);
+        window.onload = () => new ContProductos(productos);
 
-        
+
     </script>
 </head>
 
@@ -204,7 +247,7 @@
         <div class="row">
             <div class="col">
                 <header>
-                    <h1>El rastro de yoyi</h1>
+                    <h1>The Childhood Store</h1>
                     <h4>Ejemplo de cesta dinámica</h4>
                 </header>
             </div>
@@ -213,13 +256,13 @@
             <div class="col">
                 <div class="container text-center">
                     <div id="cards-container" class="row row-cols-3">
-                             
+
                     </div>
                 </div>
             </div>
             <div class="col">
                 <img src="https://img.icons8.com/shopping-basket" alt="">
-                <h2>Cesta</h2>
+                <span>Cesta</span>
                 <table class="table">
                     <thead>
                         <tr>
@@ -232,10 +275,10 @@
                     </thead>
                     <tbody id="cestaProductos">
                     </tbody>
-                            
+
                 </table>
-                <p class="derecha">Total: €</p>
-                <p class="derecha">Total + IVA (21%): €</p>
+                <p id="totalSinIva" class="derecha">Total: €</p>
+                <p id="totalConIva" class="derecha">Total + IVA (21%): €</p>
             </div>
         </div>
     </div>
