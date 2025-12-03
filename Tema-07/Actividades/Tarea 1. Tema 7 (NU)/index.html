@@ -115,7 +115,7 @@
 
             constructor(productos) {
                 this.#productos = productos;
-
+                
             }
 
             añadirProducto(productoId, cantidad) {
@@ -128,6 +128,11 @@
                 }
 
                 this.mostrarCesta();
+
+            }
+            guardarProducto() {
+                localStorage.clear();
+                localStorage.setItem("datos", JSON.stringify(this.#cesta));
 
             }
 
@@ -176,8 +181,13 @@
                 fila.appendChild(filaSubtotal);
                 fila.appendChild(filaBorrarCelda);
 
+                this.guardarProducto();
+
                 return fila;
+
             }
+
+            
 
             actualizarTotales(total) {
                 const totalElement = document.getElementById('totalSinIva');
@@ -218,6 +228,7 @@
 
                 // Actualizamos la vista 
                 this.mostrarCesta();
+                this.guardarProducto();
             }
 
         }
