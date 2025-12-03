@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>filter</title>
+    <script>
+        const productos = [
+            {id: 1, stock: 3},
+            {id: 2, stock: 0},
+            {id: 3, stock: 5},
+            {id: 4, stock: -3}
+        ];
+
+        const enStock = productos.filter(producto => producto.stock > 0);
+        console.log(enStock);
+    </script>
+</head>
+<body>
+    <h1>Filter actúa como un "colador" que devuelve todos los elementos del array que cumplan cierta condición</h1>
+    
+</body>
+</html>

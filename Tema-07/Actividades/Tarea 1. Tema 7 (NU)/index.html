@@ -115,7 +115,7 @@
 
             constructor(productos) {
                 this.#productos = productos;
-                
+                this.cargarProducto();
             }
 
             añadirProducto(productoId, cantidad) {
@@ -128,12 +128,25 @@
                 }
 
                 this.mostrarCesta();
+                this.guardarProducto();
+
 
             }
             guardarProducto() {
                 localStorage.clear();
                 localStorage.setItem("datos", JSON.stringify(this.#cesta));
 
+            }
+
+            cargarProducto() {
+                let datos = localStorage.getItem("datos");
+                let cesta = JSON.parse(datos);
+
+                if (cesta != null) {
+                    this.#cesta = cesta;
+
+                }
+                this.mostrarCesta();
             }
 
             crearFila(producto, itemCesta) {
@@ -181,13 +194,12 @@
                 fila.appendChild(filaSubtotal);
                 fila.appendChild(filaBorrarCelda);
 
-                this.guardarProducto();
 
                 return fila;
 
             }
 
-            
+
 
             actualizarTotales(total) {
                 const totalElement = document.getElementById('totalSinIva');
@@ -243,9 +255,16 @@
         ];
 
 
-        var miCesta = new Cesta(productos);
+        var miCesta;
+        var miContenedorProductos;
 
-        window.onload = () => new ContProductos(productos);
+        window.onload = () => {
+            // Inicializamos la clase que dibuja los productos
+            miContenedorProductos = new ContProductos(productos);
+
+            // Inicializamos la cesta DESPUÉS.
+            miCesta = new Cesta(productos);
+        };
 
 
     </script>

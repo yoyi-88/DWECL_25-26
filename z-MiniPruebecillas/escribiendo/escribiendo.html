@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escribiendo...</title>
+    <style>
+        label {
+            display: block;
+        }
+    </style>
+    <script>
+        class escribiendo {
+            constructor() {
+                this.fEvento();
+            }
+
+            cambio() {
+                var titulo = document.getElementById('dni-label');
+                if (titulo) {
+                titulo.textContent = 'Escribiendo DNI...';
+                }
+            }
+
+            reset() {
+                var titulo = document.getElementById('dni-label');
+                if (titulo) {
+                    titulo.textContent = 'DNI';
+                }
+                
+            }
+
+            fEvento() {
+                var campo = document.getElementById('dni');
+                campo.addEventListener("focus", this.cambio);
+                campo.addEventListener("blur", this.reset);
+                
+            }
+        }
+        window.addEventListener("load", () => new escribiendo());
+            
+        
+    </script>
+</head>
+<body>
+    <div>
+        <label for="dni" id="dni-label">DNI</label>
+        <input type="text" id="dni">
+    </div>
+    
+    
+    
+</body>
+</html>

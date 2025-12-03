@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>find</title>
+    <script>
+        const usuarios = [
+            {id: 2, nombre: 'amapola'},
+            {id: 3, nombre: 'yoyi'},
+            {id: 1, nombre: 'yoyi'}
+        ];
+
+        const usuarioBuscado = usuarios.find(user => user.nombre === 'yoyi');
+        console.log(usuarioBuscado);
+
+    </script>
+</head>
+<body>
+    <h1>Find devuelve el primer elemento del array que cumple con una codición específica</h1>
+    
+</body>
+</html>
