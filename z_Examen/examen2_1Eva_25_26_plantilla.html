@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .centra {
+         border: 1px solid grey;text-align: center;
+        }
+        .borde {
+         border: 1px solid grey;
+        }
+    </style>
+    
+</head>
+<body>
+    <script>
+  
+        // Cadena 'bdDallo', contiene todos los costes en euros (materiales, mano de obra, etc...)
+        //  para realizar el escandallo de una serie de carteras de piel recibido desde una BBDD.
+
+        const bdDallo=`[{ "cod": 1,
+                        "descrip": "cartera piel vacuno negra",
+                        "costos":{ "piel": 5,
+                                   "hilo": 0.80,
+                                   "rebaje": 1,
+                                   "pegamento": 0.50,
+                                   "pintura": 0.45,
+                                   "broches": 0.90,
+                                   "cosido": 1,
+                                   "fabricación": 15,
+                                   "embasado": 1}                
+                   },
+                   {    "cod": 2,
+                        "descrip": "cartera piel vacuno azul",
+                        "costos":{ "piel": 6,
+                                   "hilo": 0.90,
+                                   "rebaje": 1.50,
+                                   "pegamento": 0.70,
+                                   "pintura": 0.50,
+                                   "broches": 0.80,
+                                   "cosido": 1.50,
+                                   "fabricación": 16,
+                                   "embasado": 1.20}                
+                   },
+                   {    "cod": 3,
+                        "descrip": "cartera piel coco",
+                        "costos":{ "piel": 25,
+                                   "hilo": 1,
+                                   "rebaje": 1,
+                                   "pegamento": 0.70,
+                                   "pintura": 0.80,
+                                   "broches": 1,
+                                   "cosido": 3,
+                                   "fabricación": 20,
+                                   "embasado": 5}               
+                   }]`
+            var dallo = JSON.parse(bdDallo);
+            // var costo = dallo[3].costos.forEach(element => {
+            //     cosole.table(element);
+                
+            // });
+   
+        
+        class Secc {
+            constructor() {
+            }
+
+            crearCabecera() {
+                let cabecera = document.createElement('tr');
+
+                let cod = document.createElement('td');
+                cod.innerHTML = 'COD';
+                cod.classList.add('centra');
+
+                let descripcion = document.createElement('td');
+                descripcion.innerHTML = 'DESCRIPCIÓN';
+                descripcion.classList.add('centra');
+
+
+                let costos = document.createElement('td');
+                costos.innerHTML = 'COSTO €';
+                costos.classList.add('centra');
+
+
+
+                cabecera.appendChild(cod);
+                cabecera.appendChild(descripcion);
+                cabecera.appendChild(costos);
+
+                return cabecera;
+            }
+
+            crearModeloCartera(id, nombre) {
+                let producto = document.createElement('tr');
+
+                let idProducto = document.createElement('td');
+                idProducto.innerHTML = id;
+                idProducto.classList.add('borde');
+
+                let nombreProducto = document.createElement('td');
+                nombreProducto.innerHTML = nombre;
+                nombreProducto.classList.add('borde');
+
+                let espacio = document.createElement('td');
+                espacio.classList.add('borde');
+
+                producto.appendChild(idProducto);
+                producto.appendChild(nombreProducto);
+                producto.appendChild(espacio);
+
+                return producto;
+            }
+
+            crearCostes(costes) {   
+                let trCostes = document.createElement('tr');
+
+                for (const nombre in costes) {
+                    let espacio = document.createElement('td');
+
+                    let nombre = document.createElement('td');
+                    nombre.innerHTML = nombre;
+
+                    let cost = document.createElement('td');
+                    cost.innerHTML = costes[nombre];
+
+                    trCostes.appendChild(espacio);
+                    trCostes.appendChild(nombre);
+                    trCostes.appendChild(cost);
+                    
+                }
+
+                return trCostes;
+
+
+            }
+
+            crearTotal() {
+
+            }
+        }
+
+        class Tabla {
+            #dallo;
+            #secc;
+            constructor(dallo) {
+                this.#dallo = JSON.parse(bdDallo)
+                this.#secc = new Secc(dallo);
+                this.render();
+                
+            }
+
+            render() {
+                let tabla = document.createElement('table');
+                tabla.classList.add('table');
+                let thead = document.createElement('thead');
+                let tbody = document.createElement('tbody');
+
+                let cabecera = this.#secc.crearCabecera();
+
+                for (let i = 0; i != dallo.length; i++) {
+                    let producto = this.#secc.crearModeloCartera(this.#dallo[i].cod, this.#dallo[i].descrip);
+                    tbody.appendChild(producto);
+
+                    let coste = this.#secc.crearCostes(this.#dallo[i].costos);
+                    tbody.appendChild(coste);
+                }
+                
+
+                thead.appendChild(cabecera);
+
+                
+
+                tabla.appendChild(thead);
+                tabla.appendChild(tbody);
+
+                let addTabla = document.body.appendChild(tabla);
+
+                return addTabla;
+            }
+        }
+
+
+        
+
+        new Tabla(dallo);
+
+</script>
+</body>
+</html>
