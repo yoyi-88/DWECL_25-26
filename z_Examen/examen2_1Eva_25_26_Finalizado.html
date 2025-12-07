@@ -63,10 +63,12 @@
                                    "embasado": 5}               
                    }]`
 
+        // Clase para crear las secciones de la tabla (filas de cabecera, producto, costes y total)
         class Secc {
             constructor() {
             }
 
+            // Crea la fila de cabecera (COD, DESCRIPCIÓN, COSTO €)
             crearCabecera() {
                 let cabecera = document.createElement('tr');
 
@@ -92,6 +94,7 @@
                 return cabecera;
             }
 
+            // Crea la fila principal con el código y nombre del producto
             crearModeloCartera(id, nombre) {
                 let producto = document.createElement('tr');
 
@@ -104,7 +107,7 @@
                 nombreProducto.classList.add('negrita');
                 nombreProducto.classList.add('borde');
 
-                let espacio = document.createElement('td');
+                let espacio = document.createElement('td'); // Celda vacía para alinear
                 espacio.classList.add('borde');
 
                 producto.appendChild(idProducto);
@@ -114,61 +117,62 @@
                 return producto;
             }
 
+            // Crea una fila para cada coste  
             crearCostes(costes) {
                 let filasCostos = [];
 
+                // Recorre todos los costes del producto (piel, hilo, etc.)
                 for (const claveCosto in costes) {
                     let trCostes = document.createElement('tr');
 
-                    let espacio = document.createElement('td');
+                    let espacio = document.createElement('td'); // Celda vacía
                     espacio.classList.add('borde');
 
                     let elementoNombre = document.createElement('td');
-                    elementoNombre.innerHTML = claveCosto;
+                    elementoNombre.innerHTML = claveCosto; // Nombre del coste 
                     elementoNombre.classList.add('borde');
-                    // 👉 AÑADIDO: Controlador onmouseover (mouse entra)
+
+                    // Controladores de eventos con funcionalidad al pasar el ratón
                     elementoNombre.setAttribute('onmouseover', 'this.style.borderColor="blue"; this.style.borderWidth="3px"');
-                    
-                    // 👉 AÑADIDO: Controlador onmouseout (mouse sale)
                     elementoNombre.setAttribute('onmouseout', 'this.style.borderColor="black"; this.style.borderWidth="1px"');
 
 
                     let cost = document.createElement('td');
-                    cost.innerHTML = costes[claveCosto] + ' €';
+                    cost.innerHTML = costes[claveCosto] + ' €'; // Valor del coste
                     cost.classList.add('borde');
 
                     trCostes.appendChild(espacio);
                     trCostes.appendChild(elementoNombre);
                     trCostes.appendChild(cost);
 
-                    filasCostos.push(trCostes);
+                    filasCostos.push(trCostes); // Guardamos la fila creada en un array
 
                 }
 
-                return filasCostos;
-
-
+                return filasCostos; // Devuelve todas las filas de costes
             }
 
+            // Calcula y crea la fila con el Coste Total
             crearTotal(costes) {
                 let total = 0;
 
+                // Suma todos los valores de costes
                 for (const claveCosto in costes) {
                     total += parseFloat(costes[claveCosto]);
                 }
 
                 let filaTotal = document.createElement('tr');
 
-                let espacio = document.createElement('td');
+                let espacio = document.createElement('td'); // Celda vacía
 
                 let totalEstatico = document.createElement('td');
-                totalEstatico.innerHTML = 'Total:';
+                totalEstatico.innerHTML = 'Total:'; 
                 totalEstatico.classList.add('borde');
                 totalEstatico.classList.add('negrita');
 
 
                 let resultadoTotal = document.createElement('td');
-                resultadoTotal.innerHTML = total.toFixed(2) + ' €';
+                resultadoTotal.innerHTML = total.toFixed(2) + ' €'; // Muestra el total redondeado
                 resultadoTotal.classList.add('borde');
                 resultadoTotal.classList.add('negrita');
 
@@ -180,35 +184,40 @@
             }
         }
 
+        // Clase principal que imprime la tabla en pantalla
         class Tabla {
-            #dallo;
-            #secc;
-            constructor(dallo) {
-                this.#dallo = JSON.parse(bdDallo)
-                console.log(this.#dallo);
-                this.#secc = new Secc(dallo);
-                this.render();
+            #dallo; // Variable privada para los datos del escandallo
+            #secc; // Variable privada para la instancia de la clase Secc
 
+            constructor(dallo) {
+                this.#dallo = JSON.parse(bdDallo) // Parseamos la cadena JSON
+                this.#secc = new Secc(dallo); 
+                this.render(); // Llama al método para dibujar la tabla
             }
 
+            // Método para construir y mostrar la tabla en la web
             render() {
-                let tabla = document.createElement('table');
+                let tabla = document.createElement('table'); // Crea la tabla
                 tabla.classList.add('table');
-                let thead = document.createElement('thead');
-                let tbody = document.createElement('tbody');
+                let thead = document.createElement('thead'); // Crea la cabecera de la tabla
+                let tbody = document.createElement('tbody'); // Crea el cuerpo de la tabla
 
-                let cabecera = this.#secc.crearCabecera();
+                let cabecera = this.#secc.crearCabecera(); // Obtiene la fila de cabecera
 
+                // Itera sobre cada cartera 
                 for (let i = 0; i != this.#dallo.length; i++) {
+                    // Crea y añade la fila del nombre del producto
                     let producto = this.#secc.crearModeloCartera(this.#dallo[i].cod, this.#dallo[i].descrip);
                     tbody.appendChild(producto);
 
+                    // Obtiene todas las filas de costes de ese producto
                     let filasCostes = this.#secc.crearCostes(this.#dallo[i].costos);
-                    // Iteramos sobre el array y adjuntamos cada fila individualmente al tbody
+                    // Añade al cuerpo de la tabla cada fila de coste individual
                     for (const fila of filasCostes) {
                         tbody.appendChild(fila);
                     }
 
+                    // Crea y añade la fila del coste total del producto
                     let filaTotal = this.#secc.crearTotal(this.#dallo[i].costos);
                     tbody.appendChild(filaTotal);
 
@@ -216,14 +225,14 @@
                 }
 
 
-                thead.appendChild(cabecera);
+                thead.appendChild(cabecera); // Añade la cabecera al encabezado
 
 
 
-                tabla.appendChild(thead);
-                tabla.appendChild(tbody);
+                tabla.appendChild(thead); // Añade el encabezado a la tabla
+                tabla.appendChild(tbody); // Añade el cuerpo a la tabla
 
-                let addTabla = document.body.appendChild(tabla);
+                let addTabla = document.body.appendChild(tabla); // Muestra la tabla en el body del documento
 
                 return addTabla;
             }
@@ -232,7 +241,7 @@
 
 
 
-        new Tabla(bdDallo);
+        new Tabla(bdDallo); // Inicia el proceso: Crea la tabla al cargar la página
 
     </script>
 </body>
