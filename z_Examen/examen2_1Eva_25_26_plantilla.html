@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <style>
         .centra {
-         border: 1px solid grey;text-align: center;
+            border: 1px solid grey;
+            text-align: center;
         }
+
         .borde {
-         border: 1px solid grey;
+            border: 1px solid grey;
+        }
+
+        .negrita {
+            font-weight: bold;
         }
     </style>
-    
+
 </head>
+
 <body>
     <script>
-  
+
         // Cadena 'bdDallo', contiene todos los costes en euros (materiales, mano de obra, etc...)
         //  para realizar el escandallo de una serie de carteras de piel recibido desde una BBDD.
 
-        const bdDallo=`[{ "cod": 1,
+        const bdDallo = `[{ "cod": 1,
                         "descrip": "cartera piel vacuno negra",
                         "costos":{ "piel": 5,
                                    "hilo": 0.80,
@@ -54,13 +62,7 @@
                                    "fabricación": 20,
                                    "embasado": 5}               
                    }]`
-            var dallo = JSON.parse(bdDallo);
-            // var costo = dallo[3].costos.forEach(element => {
-            //     cosole.table(element);
-                
-            // });
-   
-        
+
         class Secc {
             constructor() {
             }
@@ -99,6 +101,7 @@
 
                 let nombreProducto = document.createElement('td');
                 nombreProducto.innerHTML = nombre;
+                nombreProducto.classList.add('negrita');
                 nombreProducto.classList.add('borde');
 
                 let espacio = document.createElement('td');
@@ -111,31 +114,69 @@
                 return producto;
             }
 
-            crearCostes(costes) {   
-                let trCostes = document.createElement('tr');
+            crearCostes(costes) {
+                let filasCostos = [];
 
-                for (const nombre in costes) {
+                for (const claveCosto in costes) {
+                    let trCostes = document.createElement('tr');
+
                     let espacio = document.createElement('td');
+                    espacio.classList.add('borde');
 
-                    let nombre = document.createElement('td');
-                    nombre.innerHTML = nombre;
+                    let elementoNombre = document.createElement('td');
+                    elementoNombre.innerHTML = claveCosto;
+                    elementoNombre.classList.add('borde');
+                    // 👉 AÑADIDO: Controlador onmouseover (mouse entra)
+                    elementoNombre.setAttribute('onmouseover', 'this.style.borderColor="blue"; this.style.borderWidth="3px"');
+                    
+                    // 👉 AÑADIDO: Controlador onmouseout (mouse sale)
+                    elementoNombre.setAttribute('onmouseout', 'this.style.borderColor="black"; this.style.borderWidth="1px"');
+
 
                     let cost = document.createElement('td');
-                    cost.innerHTML = costes[nombre];
+                    cost.innerHTML = costes[claveCosto] + ' €';
+                    cost.classList.add('borde');
 
                     trCostes.appendChild(espacio);
-                    trCostes.appendChild(nombre);
+                    trCostes.appendChild(elementoNombre);
                     trCostes.appendChild(cost);
-                    
+
+                    filasCostos.push(trCostes);
+
                 }
 
-                return trCostes;
+                return filasCostos;
 
 
             }
 
-            crearTotal() {
+            crearTotal(costes) {
+                let total = 0;
 
+                for (const claveCosto in costes) {
+                    total += parseFloat(costes[claveCosto]);
+                }
+
+                let filaTotal = document.createElement('tr');
+
+                let espacio = document.createElement('td');
+
+                let totalEstatico = document.createElement('td');
+                totalEstatico.innerHTML = 'Total:';
+                totalEstatico.classList.add('borde');
+                totalEstatico.classList.add('negrita');
+
+
+                let resultadoTotal = document.createElement('td');
+                resultadoTotal.innerHTML = total.toFixed(2) + ' €';
+                resultadoTotal.classList.add('borde');
+                resultadoTotal.classList.add('negrita');
+
+                filaTotal.appendChild(espacio);
+                filaTotal.appendChild(totalEstatico);
+                filaTotal.appendChild(resultadoTotal);
+
+                return filaTotal;
             }
         }
 
@@ -144,9 +185,10 @@
             #secc;
             constructor(dallo) {
                 this.#dallo = JSON.parse(bdDallo)
+                console.log(this.#dallo);
                 this.#secc = new Secc(dallo);
                 this.render();
-                
+
             }
 
             render() {
@@ -157,18 +199,26 @@
 
                 let cabecera = this.#secc.crearCabecera();
 
-                for (let i = 0; i != dallo.length; i++) {
+                for (let i = 0; i != this.#dallo.length; i++) {
                     let producto = this.#secc.crearModeloCartera(this.#dallo[i].cod, this.#dallo[i].descrip);
                     tbody.appendChild(producto);
 
-                    let coste = this.#secc.crearCostes(this.#dallo[i].costos);
-                    tbody.appendChild(coste);
+                    let filasCostes = this.#secc.crearCostes(this.#dallo[i].costos);
+                    // Iteramos sobre el array y adjuntamos cada fila individualmente al tbody
+                    for (const fila of filasCostes) {
+                        tbody.appendChild(fila);
+                    }
+
+                    let filaTotal = this.#secc.crearTotal(this.#dallo[i].costos);
+                    tbody.appendChild(filaTotal);
+
+
                 }
-                
+
 
                 thead.appendChild(cabecera);
 
-                
+
 
                 tabla.appendChild(thead);
                 tabla.appendChild(tbody);
@@ -180,10 +230,11 @@
         }
 
 
-        
 
-        new Tabla(dallo);
 
-</script>
+        new Tabla(bdDallo);
+
+    </script>
 </body>
+
 </html>
