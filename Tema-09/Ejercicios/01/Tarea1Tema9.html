@@ -5,17 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarea 1 Tema 9</title>
     <script>
-        function cargarPersonas() {
-
-        }
-
-        function fun1() {
+        function funAjax() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            let obj=JSON.parse(this.responseText);
             
+            }
         }
+        xhttp.open("GET", "jsonGET.php", true);
+        xhttp.send();
+    } 
+
+
+        
     </script>
 </head>
 <body>
     <h3>Visualizar personas</h3>
+    
+    <form action="">
+        <select  id="sel">
+
+        </select>
+    </form>
+
+    <div class="cont"></div>
     
 </body>
 </html>

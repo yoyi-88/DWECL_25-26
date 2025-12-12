@@ -10,10 +10,10 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
             let obj=JSON.parse(this.responseText);
-            document.getElementById("datos").innerHTML = obj[0].nombre;
+            console.log(obj);
             }
         }
-        xhttp.open("GET", "carteras.json", true);
+        xhttp.open("GET", "jsonGET.php", true);
         xhttp.send();
     }
     </script>
