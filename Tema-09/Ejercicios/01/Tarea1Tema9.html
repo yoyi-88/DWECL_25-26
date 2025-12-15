@@ -1,36 +1,101 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarea 1 Tema 9</title>
-    <script>
-        function funAjax() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-            let obj=JSON.parse(this.responseText);
-            
-            }
-        }
-        xhttp.open("GET", "jsonGET.php", true);
-        xhttp.send();
-    } 
-
-
-        
-    </script>
+    <title>Tarea AJAX</title>
 </head>
+
 <body>
-    <h3>Visualizar personas</h3>
-    
-    <form action="">
-        <select  id="sel">
 
-        </select>
-    </form>
+    <label for="nombres">Selecciona un nombre:</label>
+    <select id="nombres" onchange="cargarDetalle(this.value)">
+        <option value="">Cargando...</option>
+    </select>
 
-    <div class="cont"></div>
-    
+    <hr>
+
+    <div id="datos_contenedor">La tabla se cargará aquí...</div>
+
+    <script>
+        // Variable global para el único objeto XMLHttpRequest (XHR) 
+        var xhttp = new XMLHttpRequest();
+        const urlServidor = "jsonGET.php"; // Cambia esto al nombre de tu archivo PHP
+
+        // Función genérica para manejar la lógica AJAX
+        function enviarPeticion(url, funcionRespuesta) {
+            // 1. Definir la función que manejará la respuesta
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // Llama a la función específica (callback) para procesar los datos
+                    funcionRespuesta(this.responseText);
+                } else if (this.readyState == 4 && this.status != 200) {
+                    // Manejar errores
+                    document.getElementById("datos_contenedor").innerHTML = "Error al cargar los datos: " + this.status;
+                }
+            };
+
+            // 2. Abrir y enviar la petición (siempre GET en este caso)
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
+
+
+        // --- FUNCIONES ESPECÍFICAS PARA CADA TAREA ---
+
+        /**
+         * Función 1: Carga los nombres en el SELECT al iniciar la página.
+         */
+        function procesarNombres(jsonTexto) {
+            let nombres = JSON.parse(jsonTexto);
+            let select = document.getElementById("nombres");
+
+            // Limpia el 'Cargando...' inicial
+            select.innerHTML = '<option value="" disabled selected>Selecciona un nombre</option>';
+
+            // Itera sobre el array de nombres devuelto por el PHP
+            nombres.forEach(item => {
+                let option = document.createElement("option");
+                option.value = item.id;        // El valor es el ID
+                option.textContent = item.nombre; // El texto es el Nombre
+                select.appendChild(option);
+            });
+        }
+
+        /**
+         * Función 2: Carga el detalle del nombre seleccionado en una tabla.
+         * @param {string} id - El ID del registro seleccionado.
+         */
+        function cargarDetalle(id) {
+            if (id === "") {
+                document.getElementById("datos_contenedor").innerHTML = "La tabla se cargará aquí...";
+                return;
+            }
+            const url = `${urlServidor}?id=${id}`;
+            enviarPeticion(url, procesarDetalle);
+        }
+
+        function procesarDetalle(jsonTexto) {
+            let registro = JSON.parse(jsonTexto);
+            let htmlTabla = '<h3>Datos del Usuario</h3>';
+
+            // Construir la tabla con los datos del objeto
+            htmlTabla += '<table>';
+            htmlTabla += `<tr><td>ID</td><td>${registro.id}</td></tr>`;
+            htmlTabla += `<tr><td>Nombre</td><td>${registro.nombre}</td></tr>`;
+            htmlTabla += `<tr><td>Apellidos</td><td>${registro.apellidos}</td></tr>`;
+            htmlTabla += `<tr><td>Ciudad</td><td>${registro.ciudad}</td></tr>`;
+            htmlTabla += '</table>';
+
+            document.getElementById("datos_contenedor").innerHTML = htmlTabla;
+        }
+
+        // --- INICIO DE LA APLICACIÓN ---
+        // Llama a la primera función al cargar el script.
+        document.addEventListener('DOMContentLoaded', function () {
+            enviarPeticion(urlServidor, procesarNombres);
+        });
+    </script>
 </body>
+
 </html>
