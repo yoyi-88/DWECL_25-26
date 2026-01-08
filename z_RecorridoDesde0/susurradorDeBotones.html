@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>susurr</title>
+</head>
+
+<body>
+
+    <button class="btn" onclick="cambiarMensaje()">saludar </button>
+
+    <div id="mensaje"></div>
+
+    <script>
+        function cambiarMensaje() {
+            
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    let datosReales = JSON.parse(this.responseText);
+                    console.log(datosReales);
+                    document.getElementById('mensaje').innerText = 'Nombre: ' + datosReales.name;
+                }
+            }
+            xhttp.open("GET", "https://jsonplaceholder.typicode.com/users/1");
+            xhttp.send();
+        }
+    </script>
+</body>
+
+</html>

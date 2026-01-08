@@ -4,6 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Tarea AJAX</title>
+    <style>
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -13,26 +21,22 @@
         <option value="">Cargando...</option>
     </select>
 
-    <hr>
 
     <div id="datos_contenedor">La tabla se cargará aquí...</div>
 
     <script>
-        // Variable global para el único objeto XMLHttpRequest (XHR) 
+        // Variable global para el único objeto XMLHttpRequest 
         var xhttp = new XMLHttpRequest();
-        const urlServidor = "jsonGET.php"; // Cambia esto al nombre de tu archivo PHP
+        const urlServidor = "jsonGET.php"; 
 
         // Función genérica para manejar la lógica AJAX
         function enviarPeticion(url, funcionRespuesta) {
-            // 1. Definir la función que manejará la respuesta
+            // Definir la función que manejará la respuesta
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    // Llama a la función específica (callback) para procesar los datos
+                    // Llama a la función específica para procesar los datos
                     funcionRespuesta(this.responseText);
-                } else if (this.readyState == 4 && this.status != 200) {
-                    // Manejar errores
-                    document.getElementById("datos_contenedor").innerHTML = "Error al cargar los datos: " + this.status;
-                }
+                } 
             };
 
             // 2. Abrir y enviar la petición (siempre GET en este caso)
@@ -40,32 +44,25 @@
             xhttp.send();
         }
 
+        // Carga los nombres en el SELECT al iniciar la página.
 
-        // --- FUNCIONES ESPECÍFICAS PARA CADA TAREA ---
-
-        /**
-         * Función 1: Carga los nombres en el SELECT al iniciar la página.
-         */
         function procesarNombres(jsonTexto) {
             let nombres = JSON.parse(jsonTexto);
             let select = document.getElementById("nombres");
 
-            // Limpia el 'Cargando...' inicial
+            // Limpia el cargando inicial
             select.innerHTML = '<option value="" disabled selected>Selecciona un nombre</option>';
 
             // Itera sobre el array de nombres devuelto por el PHP
             nombres.forEach(item => {
                 let option = document.createElement("option");
-                option.value = item.id;        // El valor es el ID
-                option.textContent = item.nombre; // El texto es el Nombre
+                option.value = item.id;        
+                option.textContent = item.nombre; 
                 select.appendChild(option);
             });
         }
 
-        /**
-         * Función 2: Carga el detalle del nombre seleccionado en una tabla.
-         * @param {string} id - El ID del registro seleccionado.
-         */
+        //Carga el detalle del nombre seleccionado en una tabla.
         function cargarDetalle(id) {
             if (id === "") {
                 document.getElementById("datos_contenedor").innerHTML = "La tabla se cargará aquí...";
@@ -90,7 +87,6 @@
             document.getElementById("datos_contenedor").innerHTML = htmlTabla;
         }
 
-        // --- INICIO DE LA APLICACIÓN ---
         // Llama a la primera función al cargar el script.
         document.addEventListener('DOMContentLoaded', function () {
             enviarPeticion(urlServidor, procesarNombres);

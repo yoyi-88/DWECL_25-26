@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>boton</title>
+</head>
+<body>
+    <button id="btn">cambio</button>
+
+    <p id="cambio">primer texto</p>
+    
+    <script>
+        const btn = document.getElementById('btn');
+
+        btn.addEventListener('click', function (){
+            document.getElementById('cambio').innerText = 'segundo texto con addeventlistener';
+
+        });
+    </script>
+</body>
+</html>     
