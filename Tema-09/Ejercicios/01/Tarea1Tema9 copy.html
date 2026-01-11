@@ -25,26 +25,32 @@
     <div id="datos_contenedor">La tabla se cargará aquí...</div>
 
     <script>
-
-        const urlServidor = 'jsonGET.php';
         
-        function conseguirDatos(url, mostrarNombres) {
+        let urlServidor = 'jsonGET.php';
+        
+
+        function conseguirDatos(url, func) {
             const xhttp = new XMLHttpRequest;
+            
             xhttp.onreadystatechange = function() {
+                
                 if(xhttp.readyState == 4 && xhttp.status == 200) {
                     let resultado = this.responseText;
-                    mostrarNombres(this.responseText);
+                    console.log(resultado);
+                    func(this.responseText);
 
                 }
 
             }
             xhttp.open("GET", url);
             xhttp.send();
+            
 
         }
 
         function mostrarNombres(text) {
             let info = JSON.parse(text);
+            console.log(info);
 
             let nombres = document.getElementById('nombres');
         
@@ -54,23 +60,55 @@
         }
 
         function cargarDetalle(id) {
-           if (id = "") {
+           if (id == "") {
                 document.getElementById("datos_contenedor").innerHTML = "La tabla se cargará aquí...";
                 return;
             }
-            const url = `${urlServidor}?id=${id}`;
-            conseguirDatos(url, procesarDetalle)
+            const url = `${urlServidor}?id=${id}`; 
+            conseguirDatos(url, mostrarPersona)   
+                 
         }
 
-        function procesarDetalle() {
+        function mostrarPersona(text) {
+            let info = JSON.parse(text);
+            console.log(info.nombre);
+
+            contenedorPersona = document.getElementById('datos_contenedor');
+
+            let tabla = `
+                <h3>Datos del  usuario</h3>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <td>${info.id}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Nombre</th>
+                        <td>${info.nombre}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Apellidos</th>
+                        <td>${info.apellidos}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Ciudad</th>
+                        <td>${info.ciudad}</td>
+                    </tr>
+                </table>
+            `;
+
+            contenedorPersona.innerHTML = tabla;
             
         }
 
 
 
-        r
+        
         document.addEventListener('DOMContentLoaded', function () {
-            conseguirDatos()
+            conseguirDatos(urlServidor,mostrarNombres);
         });
         
     </script>

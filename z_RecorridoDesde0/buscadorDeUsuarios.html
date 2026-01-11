@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador Usuarios</title>
+</head>
+
+<body>
+    <input id="campo" type="text" placeholder="Introduzca usuario" oninput="insertarLista()">
+
+    <ul id="listaDeUsuarios"></ul>
+
+    <script>
+        const usuarios = [
+            { nombre: "Alberto", email: "alberto@mail.com" },
+            { nombre: "Beatriz", email: "bea@mail.com" },
+            { nombre: "Carlos", email: "charles@mail.com" },
+            { nombre: "Belén", email: "belen@mail.com" }
+        ];
+
+        function insertarLista() {
+            let lista = document.getElementById('listaDeUsuarios');
+
+            let usuariosFiltrados = filtrar(usuarios);
+
+            lista.innerHTML = '';
+
+            usuariosFiltrados.forEach(user => {
+                lista.innerHTML += `<li>${user.nombre}</li>`
+            });
+
+        }
+
+        function filtrar(usuarios) {
+            let input = document.getElementById('campo').value.toLowerCase();
+            resultados = usuarios.filter(u => u.nombre.toLowerCase().includes(input));
+            return resultados;
+        }
+
+        insertarLista();
+
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de registro</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <input id="nombre" type="text" placeholder="Inserte nombre">
+    <br>
+    <br>
+    <input id="edad" type="number" placeholder="Inserte edad">
+    <br>
+    <br>
+    <button onclick="validacion()">Registrar</button>
+
+    <div id="errores" style="color: red;"></div>
+
+    <script>
+        function validacion() {
+            let nombre = document.getElementById('nombre').value.trim();
+            let edad = document.getElementById('edad').value;
+            let errores = document.getElementById('errores');
+
+            errores.innerHTML = '';
+
+            if (nombre == '') {
+                errores.innerHTML += 'El campo de nombre no puede estar vacío. <br>';
+            }
+
+            if (edad === "") {
+                errores.innerHTML += 'Debe introducir una edad.<br>';
+            } else if (edad < 18) {
+                errores.innerHTML += 'Debe ser mayor de 18 años.<br>';
+            }
+
+            if (errores.innerHTML == '') {
+                errores.innerHTML = '';
+
+                alert('Registro realizado con éxito');
+
+                document.getElementById('nombre').value = '';
+                document.getElementById('edad').value = '';
+
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>

@@ -37,7 +37,7 @@ if ($base->connect_error) {
     } else {
         // Petición inicial de nombres
         
-        $sql = 'SELECT id, nombre FROM tema9.datos';
+        $sql = 'SELECT id, nombre, apellidos, ciudad FROM tema9.datos';
         $result = $base->query($sql);
         
 
