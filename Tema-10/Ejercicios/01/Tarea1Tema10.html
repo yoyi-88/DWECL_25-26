@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tarea AJAX</title>
+    <style>
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <label for="nombres">Selecciona un nombre:</label>
+    <select id="nombres" onchange="cargarDetalle(this.value)">
+        <option value="">Cargando...</option>
+    </select>
+
+
+    <div id="datos_contenedor">La tabla se cargará aquí...</div>
+
+    <script>
+        
+        let urlServidor = 'jsonGET.php';
+        
+
+        function conseguirDatos(url, func) {
+            // const xhttp = new XMLHttpRequest;
+            
+            // xhttp.onreadystatechange = function() {
+                
+            //     if(xhttp.readyState == 4 && xhttp.status == 200) {
+            //         let resultado = this.responseText;
+            //         console.log(resultado);
+            //         func(this.responseText);
+
+            //     }
+
+            // }
+            // xhttp.open("GET", url);
+            // xhttp.send();
+
+            fetch(url)
+            .then(result => result.json())
+            .then(func(url))
+            .catch(e => console.log(`Error capturado:  ${e}`));
+
+        }
+
+        function mostrarNombres(text) {
+            let info = JSON.parse(text);
+            console.log(info);
+
+            let nombres = document.getElementById('nombres');
+        
+            for (let i = 0; i != info.length; i++) {
+                nombres.innerHTML += '<option value="' + info[i].id + '">' + info[i].nombre + '</option>';
+            }
+        }
+
+        function cargarDetalle(id) {
+           if (id == "") {
+                document.getElementById("datos_contenedor").innerHTML = "La tabla se cargará aquí...";
+                return;
+            }
+            const url = `${urlServidor}?id=${id}`; 
+            conseguirDatos(url, mostrarPersona)   
+                 
+        }
+
+        function mostrarPersona(text) {
+            let info = JSON.parse(text);
+            console.log(info.nombre);
+
+            contenedorPersona = document.getElementById('datos_contenedor');
+
+            let tabla = `
+                <h3>Datos del  usuario</h3>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <td>${info.id}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Nombre</th>
+                        <td>${info.nombre}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Apellidos</th>
+                        <td>${info.apellidos}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Ciudad</th>
+                        <td>${info.ciudad}</td>
+                    </tr>
+                </table>
+            `;
+
+            contenedorPersona.innerHTML = tabla;
+            
+        }
+
+
+
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            conseguirDatos(urlServidor,mostrarNombres);
+        });
+        
+    </script>
+    
+</body>
+
+</html>
