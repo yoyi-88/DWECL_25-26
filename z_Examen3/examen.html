@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen 3</title>
+</head>
+
+<body>
+    <script>
+
+        class Pregunta {
+
+            constructor(enunciado, respuesta) {
+                this.enunciado = enunciado;
+                this.respuesta = respuesta;
+            }
+
+            pregHTML() {
+                let div = document.createElement('div');
+
+                let h3 = document.createElement('h3');
+                h3.innerText = this.enunciado;
+                this.#colorChange(h3);
+                
+
+                let label1 = document.createElement('label');
+                label1.innerText = 'a';
+                let input1 = document.createElement('input');
+                input1.type = "radio";
+                input1.name = 'respuesta' + this.enunciado.slice(19, 20);
+                if (this.respuesta == 'a') {
+                    input1.checked = 'true';
+                }
+
+                let label2 = document.createElement('label');
+                label2.innerText = 'b';
+                let input2 = document.createElement('input');
+                input2.type = "radio";
+                input2.name = 'respuesta' + this.enunciado.slice(19, 20);
+                if (this.respuesta == 'b') {
+                    input2.checked = 'true';
+                }
+
+                let label3 = document.createElement('label');
+                label3.innerText = 'c';
+                let input3 = document.createElement('input');
+                input3.type = "radio";
+                input3.name = 'respuesta' + this.enunciado.slice(19, 20);
+                if (this.respuesta == 'c') {
+                    input3.checked = 'true';
+                }
+
+                div.appendChild(h3);
+                div.appendChild(label1);
+                div.appendChild(input1);
+                div.appendChild(label2);
+                div.appendChild(input2);
+                div.appendChild(label3);
+                div.appendChild(input3);
+
+                return div;
+
+
+
+
+            }
+
+            #colorChange(h3) {
+                
+                h3.addEventListener('click', () => {
+                    if (h3.style.color == '' || h3.style.color == 'black') {
+                        h3.style.color = "blue";
+                    } else {
+                        h3.style.color = "black";
+                    }
+                });
+                
+            }
+
+
+
+        }
+
+        class Main {
+            constructor() {
+                this.#readJson();
+            }
+
+            #readJson() {
+                let xhttp = new XMLHttpRequest;
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        let resultado = this.responseText;
+                        let objeto = JSON.parse(resultado);
+                        let body = document.body;
+
+
+                        let preguntas = [];
+
+                        for (const dato of objeto) {
+                            let pregunta = new Pregunta(dato.enunciado, dato.respuesta);
+
+                            preguntas.push(pregunta);
+
+                        }
+
+                        for (let i = 0; i != preguntas.length; i++) {
+                            
+                            body.appendChild(preguntas[i].pregHTML());
+
+                        }
+
+                        console.log(objeto);
+
+                    }
+                }
+
+                xhttp.open("GET", "jsonExamen.json");
+                xhttp.send();
+            }
+
+        }
+
+
+
+        let comienzo = new Main();
+
+
+    </script>
+</body>
+
+</html>
