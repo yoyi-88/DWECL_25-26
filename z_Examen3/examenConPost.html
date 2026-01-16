@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen 3</title>
+</head>
+
+<body>
+    <script>
+
+        class Pregunta {
+            constructor(enunciado, respuesta) {
+                this.enunciado = enunciado;
+                this.respuesta = respuesta;
+            }
+
+            pregHTML() {
+                let div = document.createElement('div');
+                let h3 = document.createElement('h3');
+                h3.innerText = this.enunciado;
+                this.#colorChange(h3);
+
+                // Usamos el enunciado para crear un grupo único de radios (limpiando espacios)
+                let grupoName = "grupo_" + this.enunciado.replace(/\s+/g, '');
+
+                // Creamos las opciones a, b, c
+                ['a', 'b', 'c'].forEach(opcion => {
+                    let label = document.createElement('label');
+                    label.innerText = opcion;
+
+                    let input = document.createElement('input');
+                    input.type = "radio";
+                    input.name = grupoName;
+                    input.value = opcion; // Importante para recuperar el valor luego
+
+                    if (this.respuesta === opcion) {
+                        input.checked = true;
+                    }
+
+                    div.appendChild(label);
+                    div.appendChild(input);
+                });
+
+                div.insertBefore(h3, div.firstChild);
+                return div;
+            }
+
+            #colorChange(h3) {
+                h3.addEventListener('click', () => {
+                    h3.style.color = (h3.style.color === 'blue') ? 'black' : 'blue';
+                });
+            }
+        }
+
+        class Main {
+            constructor() {
+                this.preguntasInstanciadas = [];
+                this.#readJson();
+                this.#crearBotonEnviar();
+            }
+
+            #readJson() {
+                let xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = () => {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        let objeto = JSON.parse(xhttp.responseText);
+                        let body = document.body;
+
+                        objeto.forEach(dato => {
+                            let p = new Pregunta(dato.enunciado, dato.respuesta);
+                            this.preguntasInstanciadas.push(p);
+                            body.appendChild(p.pregHTML());
+                        });
+                    }
+                };
+                xhttp.open("GET", "jsonExamen.json");
+                xhttp.send();
+            }
+
+            #crearBotonEnviar() {
+                let btn = document.createElement('button');
+                btn.innerText = "Enviar Resultados (POST)";
+                btn.style.marginTop = "20px";
+                btn.addEventListener('click', () => this.#enviarPOST());
+                document.body.appendChild(btn);
+            }
+
+            #enviarPOST() {
+                // 1. Recolectar datos de la interfaz
+                let respuestasUsuario = [];
+                let bloques = document.querySelectorAll('div');
+
+                bloques.forEach(div => {
+                    let enunciado = div.querySelector('h3').innerText;
+                    let marcado = div.querySelector('input:checked');
+                    respuestasUsuario.push({
+                        pregunta: enunciado,
+                        respuestaSeleccionada: marcado ? marcado.value : "ninguna"
+                    });
+                });
+
+                // 2. Configurar la petición POST
+                let xhttp = new XMLHttpRequest();
+                xhttp.open("POST", "https://jsonplaceholder.typicode.com/posts"); // URL de prueba
+                xhttp.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4) {
+                        if (xhttp.status == 201 || xhttp.status == 200) {
+                            alert("¡Éxito! El servidor recibió los datos (POST).");
+                            console.log("Respuesta del servidor:", JSON.parse(xhttp.responseText));
+                        } else {
+                            alert("Error al enviar los datos.");
+                        }
+                    }
+                };
+
+                // 3. Enviar los datos convertidos a JSON string
+                xhttp.send(JSON.stringify(respuestasUsuario));
+            }
+        }
+
+        let comienzo = new Main();
+
+
+    </script>
+</body>
+
+</html>
