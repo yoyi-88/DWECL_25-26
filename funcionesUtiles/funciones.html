@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funciones Predefinidas JS</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; background: #f4f4f4; }
+        code { background: #e0e0e0; padding: 2px 4px; border-radius: 4px; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Funciones Útiles de JavaScript</h1>
+        <p>Abre la <strong>Consola del Desarrollador (F12)</strong> para ver los resultados de los ejemplos.</p>
+    </div>
+
+    <script>
+        // --- 1. FUNCIONES DE INTERACCIÓN Y SALIDA ---
+        console.log("Hola Mundo");     // Imprime mensajes en la consola.
+        // alert("¡Hola!");            // Muestra una ventana emergente de aviso.
+        // confirm("¿Estás seguro?");  // Muestra ventana con Aceptar/Cancelar (devuelve true/false).
+        // prompt("¿Tu nombre?");      // Pide una entrada de texto al usuario.
+
+        // --- 2. CONVERSIÓN DE TIPOS (Casting) ---
+        let numStr = "42.5";
+        console.log(parseInt(numStr));   // Convierte a entero (42).
+        console.log(parseFloat(numStr)); // Convierte a número decimal (42.5).
+        console.log(Number("100"));      // Convierte cualquier valor a número.
+        console.log(String(123));        // Convierte un valor a cadena de texto.
+
+        // --- 3. FUNCIONES MATEMÁTICAS (Objeto Math) ---
+        console.log(Math.round(4.7));    // Redondea al entero más cercano (5).
+        console.log(Math.floor(4.9));    // Redondea hacia abajo (4).
+        console.log(Math.ceil(4.1));     // Redondea hacia arriba (5).
+        console.log(Math.random());      // Genera un número aleatorio entre 0 y 1.
+        console.log(Math.max(1, 5, 10)); // Devuelve el número mayor (10).
+
+        // --- 4. MANIPULACIÓN DE STRINGS (Cadenas) ---
+        let texto = "  JavaScript es Genial  ";
+        console.log(texto.trim());            // Elimina espacios en blanco a los lados.
+        console.log(texto.toLowerCase());     // Convierte todo a minúsculas.
+        console.log(texto.toUpperCase());     // Convierte todo a mayúsculas.
+        console.log(texto.includes("Genial"));// Verifica si contiene una palabra (true).
+        console.log(texto.slice(2, 12));      // Corta una parte del texto.
+
+        // --- 5. MANIPULACIÓN DE ARRAYS (Listas) ---
+        let frutas = ["Manzana", "Pera"];
+        frutas.push("Naranja");               // Añade al final.
+        frutas.pop();                         // Elimina el último elemento.
+        frutas.forEach(f => console.log(f));  // Recorre cada elemento.
+        
+        let numeros = [1, 2, 3, 4];
+        let dobles = numeros.map(n => n * 2); // Crea un nuevo array transformado ([2,4,6,8]).
+        let mayores = numeros.filter(n => n > 2); // Filtra elementos ([3,4]).
+
+        // --- 6. TEMPORIZADORES ---
+        // Ejecuta un bloque de código después de 2 segundos (2000ms).
+        setTimeout(() => {
+            console.log("Han pasado 2 segundos");
+        }, 2000);
+
+        // --- 7. UTILIDADES JSON ---
+        let objeto = { nombre: "Leo", edad: 30 };
+        let jsonStr = JSON.stringify(objeto); // Convierte objeto a texto JSON (para enviar a un servidor).
+        console.log(JSON.parse(jsonStr));     // Convierte texto JSON de vuelta a objeto.
+
+    </script>
+</body>
+</html>

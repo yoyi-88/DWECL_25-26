@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen 3 - Yoël Gómez Benítez</title>
+</head>
+<body>
+    
+    <script>
+        class Boton {
+            // Creamos las variables de la clase en el constructor para poder recibir la información de la clase Main
+            constructor(nombreBot, mensaje) {
+                this.nombrebot = nombreBot;
+                this.mensaje = mensaje;
+            }
+
+            devolverBoton() {
+                // Creamos elemento html
+                let boton = document.createElement('button');
+                boton.type = 'button';
+                // Rellenamos el elemento con su respectivo nombre de botón
+                boton.innerText = this.nombrebot;
+                // Ejecutamos el método createAlert
+                this.crearAlert(boton);
+
+                return boton;
+            }
+            /*
+                Método el cual asigna un addEventListener a un botón asignado para que al ser clicado se inicie un alert
+                el cual muestre el mensaje del respectivo boton
+            */
+            crearAlert(boton) {
+                boton.addEventListener('click', () => {
+                    alert(this.mensaje);
+                });
+
+            }
+        }
+
+        class Main {
+
+            constructor() {
+                // Iniciamos el método
+                this.funAyax();
+            }
+
+            funAyax() {
+                // Creamos objeto XMLHttpRequst
+                let xhttp  = new XMLHttpRequest;
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        // Obtenemos información desde archivo json
+                        let jsonRaw = this.responseText;
+
+                        // Parseamos json
+                        let jsonParseado = JSON.parse(jsonRaw);
+
+                        // Creamos variable de body que usaremos posteriormente para añadir los botones
+                        let body = document.body;
+
+                        // Recorremos el json parseado y creamos un objeto de la clase Botón por cada objeto.
+                        for (const objeto of jsonParseado) {
+                            let boton = new Boton(objeto.nombreBot, objeto.mensaje);
+
+                            // Añadimos el boton al body para imprimirlo en pantalla mediante el método de la classe Boton "devolverBoton()"
+                            body.appendChild(boton.devolverBoton());   
+                        }
+
+                        
+
+                    }
+                }
+                // Preparamos la consulta
+                xhttp.open("GET", "botones.json");
+                // Enviamos
+                xhttp.send();
+            }
+
+
+        }
+
+        // Damos inicio al programa creando un nuevo objeto de la clase Main
+        let inicio = new Main();
+    </script>
+</body>
+</html>

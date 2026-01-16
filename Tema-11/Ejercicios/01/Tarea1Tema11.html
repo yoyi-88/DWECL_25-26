@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tarea AJAX</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <label for="nombres">Selecciona un nombre:</label>
+    <select id="nombres" onchange="cargarDetalle(this.value)">
+        <option value="">Cargando...</option>
+    </select>
+
+
+    <div id="datos_contenedor">La tabla se cargará aquí...</div>
+
+    <script>
+        const urlServidor = "jsonGET.php";
+
+        // Función genérica para manejar la lógica AJAX
+        function enviarPeticion(url, funcionRespuesta) {
+            // let jsonParseado;
+            // $.get(url,
+            // function(obj) {
+            //     obj = JSON.parse(obj);
+            //     $(jsonParseado).val(obj);
+            // });
+
+            // console.log(jsonParseado);
+
+
+            var xhttp = new XMLHttpRequest();
+            const urlServidor = "jsonGET.php";
+
+            // Función genérica para manejar la lógica AJAX
+            function enviarPeticion(url, funcionRespuesta) {
+                // Definir la función que manejará la respuesta
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // Llama a la función específica para procesar los datos
+                        funcionRespuesta(this.responseText);
+                    }
+                };
+
+                // 2. Abrir y enviar la petición (siempre GET en este caso)
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
+
+
+        }
+
+
+        function procesarNombres(jsonTexto) {
+            let nombres = JSON.parse(jsonTexto);
+            let select = document.getElementById("nombres");
+
+            // Limpia el cargando inicial
+            select.innerHTML = '<option value="" disabled selected>Selecciona un nombre</option>';
+
+            // Itera sobre el array de nombres devuelto por el PHP
+            nombres.forEach(item => {
+                let option = document.createElement("option");
+                option.value = item.id;
+                option.textContent = item.nombre;
+                select.appendChild(option);
+            });
+        }
+
+        //Carga el detalle del nombre seleccionado en una tabla.
+        function cargarDetalle(id) {
+            if (id === "") {
+                document.getElementById("datos_contenedor").innerHTML = "La tabla se cargará aquí...";
+                return;
+            }
+            const url = `${urlServidor}?id=${id}`;
+            enviarPeticion(url, procesarDetalle);
+        }
+
+        function procesarDetalle(jsonTexto) {
+            let registro = JSON.parse(jsonTexto);
+            let htmlTabla = '<h3>Datos del Usuario</h3>';
+
+            // Construir la tabla con los datos del objeto
+            htmlTabla += '<table>';
+            htmlTabla += `<tr><td>ID</td><td>${registro.id}</td></tr>`;
+            htmlTabla += `<tr><td>Nombre</td><td>${registro.nombre}</td></tr>`;
+            htmlTabla += `<tr><td>Apellidos</td><td>${registro.apellidos}</td></tr>`;
+            htmlTabla += `<tr><td>Ciudad</td><td>${registro.ciudad}</td></tr>`;
+            htmlTabla += '</table>';
+
+            document.getElementById("datos_contenedor").innerHTML = htmlTabla;
+        }
+
+        // Llama a la primera función al cargar el script.
+        document.addEventListener('DOMContentLoaded', function () {
+            enviarPeticion(urlServidor, procesarNombres);
+        });
+    </script>
+</body>
+
+</html>
