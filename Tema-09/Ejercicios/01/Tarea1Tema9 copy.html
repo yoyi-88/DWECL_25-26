@@ -25,56 +25,59 @@
     <div id="datos_contenedor">La tabla se cargará aquí...</div>
 
     <script>
-        
+        // Archivo del servidor al que le pediremos los datos
         let urlServidor = 'jsonGET.php';
         
-
+        // conecta al servidor para pedir información
         function conseguirDatos(url, func) {
             const xhttp = new XMLHttpRequest;
             
             xhttp.onreadystatechange = function() {
-                
+                // Si la petición terminó (4) y fue exitosa (200)
                 if(xhttp.readyState == 4 && xhttp.status == 200) {
                     let resultado = this.responseText;
                     console.log(resultado);
-                    func(this.responseText);
+                    func(this.responseText); // Pasamos el texto a la función que lo procesará
 
                 }
                 
             }
-            xhttp.open("GET", url);
-            xhttp.send();
+            xhttp.open("GET", url); // Preparamos petición
+            xhttp.send(); // Enviamos
             
 
         }
 
+        // Rellena el menú desplegable al inicio
         function mostrarNombres(text) {
-            let info = JSON.parse(text);
-            console.log(info);
-
+            let info = JSON.parse(text); // Convertimos el texto JSON en un objeto de JS
             let nombres = document.getElementById('nombres');
         
+            // Recorremos la lista de nombres y creamos una opción por cada uno
             for (let i = 0; i != info.length; i++) {
                 nombres.innerHTML += '<option value="' + info[i].id + '">' + info[i].nombre + '</option>';
             }
         }
 
+        // Se activa cuando el usuario elige un nombre en el menú
         function cargarDetalle(id) {
-           if (id == "") {
+           if (id == "") { // Si no hay nada seleccionado, volvemos al texto original
                 document.getElementById("datos_contenedor").innerHTML = "La tabla se cargará aquí...";
                 return;
             }
+            // Creamos la URL con el ID seleccionado
             const url = `${urlServidor}?id=${id}`; 
-            conseguirDatos(url, mostrarPersona)   
-                 
+            conseguirDatos(url, mostrarPersona); // Pedimos los datos de esa persona
         }
 
+        // Crea la tabla con la información de la persona seleccionada
         function mostrarPersona(text) {
-            let info = JSON.parse(text);
+            let info = JSON.parse(text); // Convertimos los datos de la persona a objeto
             console.log(info.nombre);
 
             contenedorPersona = document.getElementById('datos_contenedor');
 
+            // Creamos el HTML de la tabla con los datos del objeto "info"
             let tabla = `
                 <h3>Datos del  usuario</h3>
                 <table>
@@ -100,13 +103,13 @@
                 </table>
             `;
 
-            contenedorPersona.innerHTML = tabla;
+            contenedorPersona.innerHTML = tabla; // Inyectamos la tabla en el HTML
             
         }
 
 
 
-        
+        // Al cargar la página ejecuta la petición inicial para llenar el menú desplegable
         document.addEventListener('DOMContentLoaded', function () {
             conseguirDatos(urlServidor,mostrarNombres);
         });
