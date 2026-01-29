@@ -18,7 +18,8 @@ class GrupoBot implements MetodosBotones {
     rest(): void {
         // Si existen botones (el contador es mayor que 0), eliminamos el último botón y restamos 1 al contador
         if (this.contador > 0) {
-            $("#grupoBotones button:last").remove();
+            const contenedor = document.getElementById('grupoBotones');
+            contenedor?.lastElementChild?.remove();
             this.contador--;
         }
     }
@@ -28,16 +29,17 @@ class Boton {
     // Dentro del constructor creamos el contador que recibirá el valor de la clase GrupoBot
     constructor(contador: number) {
         // Recogemos el div en el que se crearán los botones y creamos el botón atendiendo a su número
-        let grupoBotones = $("#grupoBotones");
-        var boton= $("<button></button>").text(contador);
+        let grupoBotones = document.getElementById('grupoBotones');
+        let boton = document.createElement('button');
+        boton.innerText =  contador.toString();
 
         // Añadimos un evento al botón para que muestre un alert al ser pulsado
-        boton.on('click', () => {
+        boton.addEventListener('click', () => {
             alert('Botón' + contador);
         });
 
         // Añadimos el botón al div
-        grupoBotones.append(boton);
+        grupoBotones?.appendChild(boton);
     }
 }
 
@@ -46,10 +48,10 @@ const botones = new GrupoBot();
 
 // Creamos los eventos que accionarán los métodos add() y rest() de la clase GrupoBot al pulsar los dos botones 
 // definidos en el html
-$("#botonAnadir").on('click', function(){
+document.getElementById("botonAnadir")?.addEventListener('click', function(){
     botones.add();    
 });
-$("#botonBorrar").on('click', function(){
+document.getElementById("botonBorrar")?.addEventListener('click', function(){
     botones.rest();    
 });
 
