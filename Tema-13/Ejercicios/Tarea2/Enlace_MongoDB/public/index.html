@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Conexión Node + MongoDB</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .formulario { margin-bottom: 20px; }
+        input, button { padding: 8px; margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>Gestión de Usuarios</h1>
+
+    <div class="formulario">
+        <input type="text" id="nombre" placeholder="Nombre">
+        <input type="text" id="apellido" placeholder="Apellido">
+        <button onclick="añadirUsuario()">Añadir</button>
+    </div>
+
+    <h2>Lista de usuarios en BBDD</h2>
+    <ul id="listaUsuarios"></ul>
+
+    <script>
+        // Función 1: AJAX GET para listar los usuarios
+        async function listarUsuarios() {
+            // Hacemos la petición al servidor
+            const respuesta = await fetch('/api/usuarios');
+            const usuarios = await respuesta.json();
+            
+            // Obtenemos el <ul> del HTML y lo vaciamos
+            const ul = document.getElementById('listaUsuarios');
+            ul.innerHTML = ''; 
+            
+            // Recorremos los datos de Mongo y creamos un <li> por cada uno
+            usuarios.forEach(usuario => {
+                const li = document.createElement('li');
+                li.textContent = `${usuario.nombre} ${usuario.apellido}`;
+                ul.appendChild(li);
+            });
+        }
+
+        // Función 2: AJAX POST para añadir un usuario
+        async function añadirUsuario() {
+            const nombre = document.getElementById('nombre').value;
+            const apellido = document.getElementById('apellido').value;
+
+            // Validamos que no estén vacíos
+            if (nombre === '' || apellido === '') {
+                alert('Por favor, rellena nombre y apellido');
+                return;
+            }
+
+            // Hacemos la petición POST al servidor
+            await fetch('/api/usuarios', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre: nombre, apellido: apellido })
+            });
+
+            // Limpiamos los inputs
+            document.getElementById('nombre').value = '';
+            document.getElementById('apellido').value = '';
+
+            // Volvemos a listar para ver el nuevo registro automáticamente
+            listarUsuarios();
+        }
+
+        // Llamamos a la función listar nada más abrir la página
+        listarUsuarios();
+    </script>
+
+</body>
+</html>

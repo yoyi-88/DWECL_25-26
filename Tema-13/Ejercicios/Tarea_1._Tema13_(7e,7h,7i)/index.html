@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document-Button</title>
+</head>
+
+<body>
+    <h1>Index.html leído</h1>
+    <button id="boton">Pulsar</button>
+    <div id="contenedor"></div>
+
+    <script>
+        // Seleccionamos el botón
+        const btn = document.getElementById('boton');
+
+        btn.addEventListener('click', () => {
+            // Iniciamos la petición AJAX
+            fetch('/pagAjax')
+                .then(res => {
+                    // Convertimos a JSON
+                    return res.json();
+                })
+                .then(data => {
+                    // Inyectamos el nombre en el div
+                    document.getElementById('contenedor').innerHTML = data.nombre + ' ' + data.apellido;
+                })
+        });
+    </script>
+
+</body>
+
+</html>
