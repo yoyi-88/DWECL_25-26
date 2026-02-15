@@ -1,9 +1,11 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Calc } from './calc/calc';
+
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -12,10 +14,12 @@ import { Calc } from './calc/calc';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideClientHydration(withEventReplay()),
   ],
   bootstrap: [App]
 })
