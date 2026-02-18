@@ -34,59 +34,60 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var _this = this;
 var Peticion = /** @class */ (function () {
     function Peticion() {
-        this.ejecutarPeticion();
     }
-    Peticion.prototype.ejecutarPeticion = function () {
+    Peticion.ejecutarPeticion = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                // try {
-                //     let conexion = await fetch('http://localhost:3000');
-                //     let datos = await conexion.json();
-                //     let contenedor = document.getElementById('contenedorProductos');
-                //     for (let producto of datos) {
-                //         let nuevoProducto = new Producto(producto.id, producto.nombre, producto.precio, producto.stock);
-                //         contenedor?.appendChild(nuevoProducto.render());
-                //     }
-                // } catch (e) {
-                //     console.log('Error: ', e);
-                // }
-                $.ajax({
-                    url: 'http://localhost:3000', // URL de la API
-                    method: 'GET', // Método HTTP (GET, POST, PUT, DELETE)
-                    dataType: 'json', // Tipo de dato que esperamos de vuelta
-                })
-                    .done(function (data) {
-                    // Se ejecuta si la petición es exitosa
-                    var contenedor = document.getElementById('contenedorProductos');
-                    for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
-                        var producto = data_1[_i];
-                        var nuevoProducto = new Producto(producto.id, producto.nombre, producto.precio, producto.stock);
-                        contenedor === null || contenedor === void 0 ? void 0 : contenedor.appendChild(nuevoProducto.render());
-                    }
-                });
-                return [2 /*return*/];
+                // let conexion = await fetch('http://localhost:3000/productos');
+                // let datos = await conexion.json();
+                // return datos;
+                return [2 /*return*/, $.ajax({
+                        url: 'http://localhost:3000/productos', // URL de la API
+                        method: 'GET', // Método HTTP (GET, POST, PUT, DELETE)
+                        dataType: 'json' // Tipo de dato que esperamos de vuelta
+                    })];
             });
         });
     };
     return Peticion;
 }());
-var Producto = /** @class */ (function () {
-    function Producto(id, nombre, precio, stock) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.stock = stock;
+var Visualizacion = /** @class */ (function () {
+    function Visualizacion() {
     }
-    Producto.prototype.render = function () {
-        var producto = document.createElement('p');
-        producto.innerHTML = "Id: ".concat(this.id, ", Nombre: ").concat(this.nombre, ", Precio: ").concat(this.precio, ", Stock: ").concat(this.stock);
-        return producto;
+    Visualizacion.render = function (productos, contenedorId) {
+        var contenedor = document.getElementById(contenedorId);
+        if (!contenedor)
+            return;
+        contenedor.innerHTML = ''; // Limpiamos antes de pintar
+        for (var _i = 0, productos_1 = productos; _i < productos_1.length; _i++) {
+            var producto = productos_1[_i];
+            var tr = document.createElement('tr');
+            tr.innerHTML = "\n            <td>".concat(producto.id, "</td>\n            <td>").concat(producto.nombre, "</td>\n            <td>").concat(producto.precio, "\u20AC</td>\n            <td>").concat(producto.stock, " uds</td>");
+            contenedor.appendChild(tr);
+        }
     };
-    return Producto;
+    return Visualizacion;
 }());
 var boton = document.getElementById('boton');
-boton === null || boton === void 0 ? void 0 : boton.addEventListener('click', function () {
-    new Peticion;
-});
+boton === null || boton === void 0 ? void 0 : boton.addEventListener('click', function () { return __awaiter(_this, void 0, void 0, function () {
+    var datos, e_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, Peticion.ejecutarPeticion()];
+            case 1:
+                datos = _a.sent();
+                Visualizacion.render(datos, 'cuerpoTabla');
+                return [3 /*break*/, 3];
+            case 2:
+                e_1 = _a.sent();
+                console.log('Error: ', e_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
