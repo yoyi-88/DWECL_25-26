@@ -9,5 +9,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.33"
+  },
+  "dependencies": {
+    "jquery": "^4.0.0"
   }
 }
