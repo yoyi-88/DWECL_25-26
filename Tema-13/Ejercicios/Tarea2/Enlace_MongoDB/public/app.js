@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputApellido = document.getElementById('apellido');
     const listaUsuarios = document.getElementById('listaUsuarios');
 
-    // 1. Función para obtener (GET) y listar los usuarios
+    // Función para obtener (GET) y listar los usuarios
     const cargarUsuarios = async () => {
         try {
             const respuesta = await fetch('/api/usuarios');
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 2. Función para añadir (POST) un nuevo usuario
+    // Función para añadir (POST) un nuevo usuario
     btnAñadir.addEventListener('click', async () => {
         const nombre = inputNombre.value.trim();
         const apellido = inputApellido.value.trim();
@@ -61,6 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 3. Al abrir la página, cargar los usuarios por primera vez
+    // Al abrir la página, cargar los usuarios por primera vez
     cargarUsuarios();
 });
