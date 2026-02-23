@@ -1,6 +1,6 @@
 import { MongoClient} from 'mongodb';
 // Replace the uri string with your MongoDB deployment's connection string.
-const uri = "mongodb+srv://yoyi:<db_password>@tarea2tema13.0spxmr3.mongodb.net/?appName=Tarea2Tema13";
+const uri = "mongodb+srv://yoyi:yoyi@tarea2tema13.0spxmr3.mongodb.net/?appName=Tarea2Tema13";
 
 // Create a new client and connect to MongoDB
 export async function run(registro) {
