@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ClientesService } from './../clientes-service';
-import { Cliente, Grupo } from './../cliente.model';
+import { ClientesService } from '../clientes-service';
+import { Cliente, Grupo } from '../cliente.model';
 
 @Component({
   selector: 'app-alta-clientes',

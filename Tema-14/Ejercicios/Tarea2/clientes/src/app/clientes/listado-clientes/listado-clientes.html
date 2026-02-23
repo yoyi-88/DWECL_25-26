@@ -1,0 +1,16 @@
+<h2>
+    Listado clientes
+</h2>
+@if (clientes.length === 0) {
+<div>No hay clientes por el momento</div>
+}
+<div>
+    @for (cliente of clientes; track cliente.cif) {
+    <article>
+        <span>{{cliente.nombre}}</span>
+        <span>{{cliente.cif}}</span>
+        <span>{{cliente.direccion}}</span>
+        <span>{{cliente.grupo}}</span>
+    </article>
+    }
+</div>
