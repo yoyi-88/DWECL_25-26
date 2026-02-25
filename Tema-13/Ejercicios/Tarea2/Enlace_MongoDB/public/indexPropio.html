@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios MongoDB</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .formulario { margin-bottom: 20px; }
+        input, button { padding: 8px; margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>Gestión de Usuarios</h1>
+
+    <div class="formulario">
+        <input type="text" id="nombre" placeholder="Nombre">
+        <input type="text" id="apellido" placeholder="Apellido">
+        <button id="btnAñadir">Añadir Usuario</button>
+    </div>
+
+    <h2>Lista de Usuarios (BBDD)</h2>
+    <ul id="listaUsuarios">
+    </ul>
+
+    <script src="app.js"></script>
+</body>
+</html>
