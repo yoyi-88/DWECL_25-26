@@ -1,0 +1,24 @@
+<div class="productos-container">
+  <h2 class="titulo-seccion">Nuestro Catálogo</h2>
+  
+  <div class="grid-productos">
+    <mat-card class="tarjeta-producto" *ngFor="let producto of listaProductos">
+      <div class="img-wrapper">
+        <img mat-card-image [src]="producto.imagen" [alt]="producto.nombre" class="img-producto">
+      </div>
+      
+      <mat-card-header>
+        <mat-card-title class="prod-title">{{ producto.nombre }}</mat-card-title>
+        <div class="prod-precio">{{ producto.precio | number:'1.2-2' }} €</div>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <p class="prod-desc">{{ producto.descripcion }}</p>
+      </mat-card-content>
+      
+      <mat-card-actions class="acciones-tarjeta">
+        <button mat-raised-button color="warn" class="btn-compra">Añadir al carrito</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

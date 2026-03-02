@@ -1,0 +1,94 @@
+/* Contenedor principal */
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  background-color: #121212; /* Fondo oscuro */
+  min-height: 85vh;
+}
+
+/* Tarjeta de presentación */
+.presentacion-card {
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Título principal  */
+.titulo-principal {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+/* Imagen del ring */
+.imagen-hero {
+  height: 400px;
+  object-fit: cover;
+  filter: grayscale(30%) brightness(80%); /* Toque dramático a la imagen */
+}
+
+/* Texto de descripción  */
+.descripcion {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 20px 0;
+  color: #aaaaaa;
+}
+
+/* Divisor  */
+mat-divider {
+  border-color: #333 !important; /* Divisor oscuro */
+  margin: 30px 0 !important;
+}
+
+/* Contenedor de las 3 ventajas */
+.ventajas {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding: 20px 0;
+  flex-wrap: wrap; /* Para que se adapte bien en móviles */
+}
+
+/* Cada ítem de ventaja individual */
+.ventaja-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: #ff8f07; 
+}
+
+/* Íconos de las ventajas */
+.ventaja-item mat-icon {
+  transform: scale(1.8); /* Ajustado a 1.8 para que destaquen más */
+  margin-bottom: 5px;
+}
+
+/* Contenedor del botón */
+.acciones-home {
+  padding: 30px; /* Un poco más de padding lateral para que el botón respire */
+  justify-content: center;
+}
+
+/* Botón "Ver Equipamiento" */
+.btn-ver {
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 10px 0 !important;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  color: black !important; /* Fuerza el color negro en el texto */
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}

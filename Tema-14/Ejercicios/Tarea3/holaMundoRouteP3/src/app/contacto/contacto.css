@@ -1,0 +1,42 @@
+.contacto-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px;
+  background-color: #121212;
+  min-height: 85vh;
+}
+
+h2 {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.subtitulo {
+  color: #aaaaaa;
+  margin-bottom: 40px;
+}
+
+.contacto-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 550px;
+  gap: 20px;
+  background-color: #1E1E1E; /* Superficie de tarjeta */
+  padding: 40px;
+  border-radius: 4px;
+  border: 1px solid #333;
+}
+
+/* Estilo para el botón de enviar */
+.btn-enviar {
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 10px 0 !important;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  color: black;
+}
+

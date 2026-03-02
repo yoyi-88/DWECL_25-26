@@ -1,0 +1,50 @@
+/* src/styles.css */
+
+/* 1. Importamos una fuente más "deportiva" (Opcional, pero recomendado) */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400;500&display=swap');
+
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  /* 2. Fondo oscuro global */
+  background-color: #121212; 
+  /* 3. Tipografía base */
+  font-family: 'Roboto', sans-serif;
+  color: #ffffff;
+}
+
+/* 4. Estilo global para Títulos (Oswald da un toque deportivo/prensa) */
+h1, h2, h3, .mat-mdc-card-title {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 5. Personalización de componentes de Angular Material para que encajen en el tema oscuro */
+
+/* Tarjetas (MatCard) */
+.mat-mdc-card {
+  background-color: #1E1E1E !important; /* Gris oscuro para la superficie */
+  color: #ffffff !important;
+  border: 1px solid #333; /* Un borde sutil */
+  border-radius: 4px !important; /* Esquinas menos redondeadas */
+}
+
+.mat-mdc-card-subtitle {
+  color: #aaaaaa !important;
+}
+
+/* Inputs de Formulario (MatInput) */
+.mat-mdc-form-field {
+  --mdc-filled-text-field-container-color: #2a2a2a !important; /* Fondo del input */
+  --mdc-filled-text-field-focus-active-indicator-color: #ff1744 !important; /* Línea de foco roja */
+  color: #ffffff !important;
+}
+
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-label-wrapper mat-label {
+  color: #aaaaaa !important; /* Color de la etiqueta */
+}
+
+.mat-mdc-input-element {
+  color: #ffffff !important; /* Color del texto que escribe el usuario */
+}

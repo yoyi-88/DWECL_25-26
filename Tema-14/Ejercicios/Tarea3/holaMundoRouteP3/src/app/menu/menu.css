@@ -1,0 +1,40 @@
+.main-toolbar {
+  background-color: #000000 !important; /* Negro puro */
+  color: #ffffff !important;
+  border-bottom: 2px solid #ff1744; /* Línea roja fina debajo del menú */
+  position: sticky; /* Se queda fijo arriba al hacer scroll */
+  top: 0;
+  z-index: 1000;
+}
+
+.brand-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ff1744; /* Título en rojo */
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Estilo para los botones del menú */
+.nav-buttons button {
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin-left: 10px;
+  color: #ffffff !important;
+}
+
+/* Efecto Hover (al pasar el ratón) */
+.nav-buttons button:hover {
+  background-color: rgba(255, 23, 68, 0.1) !important;
+}
+
+/* Estilo para el enlace activo (en qué página estás) */
+.active-link {
+  border-bottom: 2px solid #ff1744;
+  border-radius: 0 !important;
+}

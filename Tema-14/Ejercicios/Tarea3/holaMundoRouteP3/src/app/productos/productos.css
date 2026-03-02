@@ -1,0 +1,79 @@
+.productos-container {
+  padding: 60px 20px;
+  background-color: #121212;
+}
+
+.titulo-seccion {
+  text-align: center;
+  color: #ffffff;
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+}
+
+.grid-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.tarjeta-producto {
+  border: 1px solid #333;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* Efecto al pasar el ratón sobre la tarjeta */
+.tarjeta-producto:hover {
+  transform: translateY(-5px); /* Se levanta un poco */
+  border-color: #ff1744; /* El borde se vuelve rojo */
+}
+
+.img-wrapper {
+  overflow: hidden;
+  height: 250px;
+  border-bottom: 1px solid #333;
+}
+
+.img-producto {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Muestra el producto entero sin recortar */
+  padding: 15px;
+  background-color: #fff; /* Fondo blanco tras la imagen para que resalte el producto */
+}
+
+.prod-title {
+  font-size: 1.4rem !important;
+  color: #ffffff;
+  margin-top: 15px;
+}
+
+.prod-precio {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff1744; /* Precio en rojo */
+  margin: 19.5px 50px;
+}
+
+.prod-desc {
+  color: #aaaaaa;
+  font-size: 0.95rem;
+  height: 40px; /* Limitamos la altura de la descripción */
+  overflow: hidden;
+}
+
+.acciones-tarjeta {
+  justify-content: center;
+  padding: 15px !important;
+  margin-top: auto;
+}
+
+.btn-compra {
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #ff7e06 !important; /* Color rojo vibrante para el botón de compra */
+  background-color: transparent;
+  border: #121212 solid 2px;
+}
