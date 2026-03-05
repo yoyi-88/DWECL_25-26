@@ -2,11 +2,12 @@
   <h2 class="titulo-seccion">Nuestro Catálogo</h2>
   
   <div class="grid-productos">
+
     <mat-card class="tarjeta-producto" *ngFor="let producto of listaProductos">
       <div class="img-wrapper">
         <img mat-card-image [src]="producto.imagen" [alt]="producto.nombre" class="img-producto">
       </div>
-      
+      *ngFor="let producto of listaProductos"
       <mat-card-header>
         <mat-card-title class="prod-title">{{ producto.nombre }}</mat-card-title>
         <div class="prod-precio">{{ producto.precio | number:'1.2-2' }} €</div>

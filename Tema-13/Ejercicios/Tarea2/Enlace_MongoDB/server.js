@@ -1,51 +1,57 @@
-// Imports
-import express from 'express';
-import path from 'path';
-import { MongoClient } from 'mongodb';
+const express = require('express');
+const { MongoClient } = require('mongodb');
+const path = require('path');
 
-// Variables
 const app = express();
-const router = express.Router();
-const __dirname = path.resolve();
+const port = 3000;
+var __dirname = path.resolve();
 
-// Configuración MongoDB
-const url = "mongodb+srv://javi:1234@cluster0.ifquelj.mongodb.net/?appName=Cluster0"
-const nombreDb = "miDb";
-const client = new MongoClient(url);
+// Configuración de middlewares
+app.use(express.json()); // Para poder parsear el body de las peticiones POST
+app.use(express.static(__dirname)); // Sirve los archivos de la carpeta public
 
-// Para leer el JSON enviado desde el HTML
-app.use(express.json());
+// URI de conexión de MongoDB Atlas (¡Reemplázala por la tuya!)
+const uri = "mongodb+srv://yoyi:yoyi@tarea2tema13.0spxmr3.mongodb.net/?appName=Tarea2Tema13"; 
+const client = new MongoClient(uri);
 
-// Ruta para leer usuarios
-// Se usa función asincrona para que de tiempo de hacer la comunicación con la db
-router.get('/usuarios', async (req, res) => {
+// Variables basadas en tu captura de pantalla
+const dbName = 'Tarea2Tema13';
+const collectionName = 'Usuarios';
 
-    await client.connect();
-    const db = client.db(nombreDb);
-    // Consulta todos los datos y los devuelve en forma de array
-    const usuarios = await db.collection('usuarios').find().toArray();
-    res.json(usuarios);
-    
+// ENDPOINT GET: Leer todos los documentos (registros)
+app.get('/api/usuarios', async (req, res) => {
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        const usuarios = await db.collection(collectionName).find({}).toArray();
+        res.json(usuarios);
+    } catch (error) {
+        // Esto imprimirá el error real en tu terminal de Node.js
+        console.error("Error DETALLADO de MongoDB:", error); 
+        res.status(500).json({ error: 'Error al obtener los usuarios' });
+    }
 });
 
-// Ruta para añadir nuevo usuario
-router.post('/nuevo', async (req, res) => {
-    await client.connect();
-    const db = client.db(nombreDb);
-    const nuevoUsuario = {
-        nombre: req.body.nombre,
-        apellido: req.body.apellido
-    };
-    await db.collection('usuarios').insertOne(nuevoUsuario);
-    res.json("Guardado con éxito");
+// ENDPOINT POST: Escribir un nuevo documento
+app.post('/api/usuarios', async (req, res) => {
+    try {
+        await client.connect();
+        const db = client.db(dbName);
+        
+        // Recogemos los datos que nos envía el frontend
+        const nuevoUsuario = {
+            nombre: req.body.nombre,
+            apellido: req.body.apellido
+        };
+
+        const resultado = await db.collection(collectionName).insertOne(nuevoUsuario);
+        res.status(201).json({ mensaje: 'Usuario añadido', id: resultado.insertedId });
+    } catch (error) {
+        res.status(500).json({ error: 'Error al guardar el usuario' });
+    }
 });
 
-// Ruta raíz
-router.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '/index.html'));
-});
-
-app.use('/', router);
-app.listen(3000, function () {
-    console.log('Servidor en http://localhost:3000')
+// Iniciar servidor
+app.listen(port, () => {
+    console.log(`Servidor corriendo en http://localhost:${port}`);
 });
